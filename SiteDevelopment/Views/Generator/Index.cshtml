@@ -1,0 +1,180 @@
+﻿@model SiteDevelopment.Models.InputData
+@{
+    ViewBag.Title = "Index";
+}
+
+@*<img class="img-responsive" src="~/Images/Board Background/@source" />*@
+
+<div class="row substrate">
+    <form action="/" method="POST" class="form-horizontal">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="clearfix">
+                    <div id="thumbcarousel" class="carousel slide" data-interval="false">
+                        <div class="carousel-inner">
+                            @{
+                                int itemCount = (int)Math.Ceiling(ViewBag.Images.Count / 4.0);
+                                int currentNumber = 0;
+
+                                for (int i = 0; i < itemCount; i++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        @Html.Raw("<div class=\"item active\">");
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw("<div class=\"item\">");
+                                    }
+
+                                    for (int j = 0; j < 4; j++)
+                                    {
+                                        if (currentNumber == ViewBag.Images.Count)
+                                        {
+                                            break;
+                                        }
+                                        @Html.Raw($"<div data-target=\"#carousel\" data-slide-to=\"{currentNumber}\" class=\"thumb\"><img src=\"/Images/Board Background/{ViewBag.Images[currentNumber]}\"></div>");
+
+                                        currentNumber++;
+                                    }
+                                    @Html.Raw("</div>");
+                                }
+                            }
+
+                        </div><!-- /carousel-inner -->
+                        <a class="left carousel-control" href="#thumbcarousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#thumbcarousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div> <!-- /thumbcarousel -->
+                </div><!-- /clearfix -->
+
+            </div>
+        </div>
+
+        <hr />
+
+        <div>
+            <div id="form" class="col-lg-12">
+                <h4>Тип афиши</h4>
+
+                <button class="btn btn-primary pit-style" name="TypeOfBoard" type="reset" data-toggle="collapse" data-target="#show-event" onclick="ShowPreview();" style="outline:none;">
+                    Анонс
+                </button>
+
+                <button class="btn btn-primary pit-style" name="TypeOfBoard" type="reset" data-toggle="collapse" data-target="#show-event" onclick="ShowRecap();" style="outline:none;">
+                    Результат
+                </button>
+
+                <div id="show-event" class="collapse">
+                    <div id="image" class="col-lg-6">
+                        <div class="well">
+                            <div class="form-group">
+                                <label class="col-lg-5">Дата матча</label>
+                                <div class="col-lg-7">
+                                    <div class="input-group date" id="datetimepicker2">
+                                        <input type="text" class="form-control" name="DateOfAMatch" id="date-input" onkeydown="return false" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-5">Гостевая команда</label>
+                                <div class="col-lg-7">
+                                    <select class="team-dropdown form-control" name="AwayTeam">
+                                        <option class="team-dropdown" disabled selected>Выберите команду...</option>
+                                        @{
+                                            foreach (string item in ViewBag.DropDown)
+                                            {
+                                                <option class="team-dropdown-clean" value="@item">@item.ToString()</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-5">Домашняя команда</label>
+                                <div class="col-lg-7">
+                                    <select class="team-dropdown form-control" name="HomeTeam" onchange="GetPlace(this.value)">
+                                        <option class="team-dropdown" disabled selected>Выберите команду...</option>
+                                        @{
+                                            foreach (string item in ViewBag.DropDown)
+                                            {
+                                                <option class="team-dropdown-clean" value="@item">@item.ToString()</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-5">Место проведения</label>
+                                <div class="col-lg-7">
+                                    <input id="city" class="form-control" type="text" name="Location" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-5">Арена</label>
+                                <div class="col-lg-7">
+                                    <input id="arena" class="form-control" type="text" name="Arena" readonly="readonly" />
+                                </div>
+                            </div>
+
+                            <div id="scoreboard" class="form-group">
+                                <label class="col-lg-5">Счёт матча</label>
+                                <div class="col-lg-2">
+                                    <input class="form-control" type="number" name="AwayTeamScore" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <input class="form-control" type="number" name="HomeTeamScore" />
+                                </div>
+                                <div class="col-lg-3">
+                                    <select class="team-dropdown form-control">
+                                        <option class="team-dropdown" id="result" name="TypeOfWin" disabled selected>Итог</option>
+                                        @{
+                                            foreach (string item in ViewBag.Result)
+                                            {
+                                                <option class="team-dropdown-clean" value="@item">@item.ToString()</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-default">Создать афишу</button>
+                            <button type="reset" class="btn btn-default">Сбросить данные</button>
+
+                        </div>
+                    </div>
+
+                    <div id="image" class="col-lg-6">
+                        <div id="carousel" class="carousel" data-ride="carousel" data-interval="false">
+                            <div class="carousel-inner">
+                                @{
+                                    foreach (string item in ViewBag.Images)
+                                    {
+                                        <div class="item">
+                                            <img src="/Images/Board Background/@item" />
+                                        </div>
+                                    }
+                                }
+                                <div class="item active">
+                                    <img src="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
