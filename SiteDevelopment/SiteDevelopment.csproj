@@ -52,6 +52,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -131,13 +133,43 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\InputData.cs" />
+    <Compile Include="Models\Matches.cs">
+      <DependentUpon>SiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Seasons.cs">
+      <DependentUpon>SiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SiteModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SiteModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SiteModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SiteModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SiteModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Standings.cs">
+      <DependentUpon>SiteModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Streak.cs" />
+    <Compile Include="Models\Teams.cs">
+      <DependentUpon>SiteModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TypeOfBoard.cs" />
     <Compile Include="Models\TypeOfWin.cs" />
+    <Compile Include="Partial\Teams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\GraphicsExtention.cs" />
     <Compile Include="Repository\DbQuery.cs" />
     <Compile Include="Repository\ImageGeneration.cs" />
     <Compile Include="Repository\ServiceFunctions.cs" />
+    <Compile Include="Repository\SiteRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -156,6 +188,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="Models\SiteModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SiteModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\SiteModel.edmx.diagram">
+      <DependentUpon>SiteModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Images\Board Background\arena-board.jpg" />
     <Content Include="Images\Board Background\ice-board.jpg" />
@@ -190,6 +229,16 @@
     <Content Include="Images\Logos\WPG.png" />
     <Content Include="Images\Logos\WSH.png" />
     <Content Include="Images\Site Background\penguins-background.jpg" />
+    <Content Include="Models\SiteModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SiteModel.edmx</DependentUpon>
+      <LastGenOutput>SiteModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\SiteModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SiteModel.edmx</DependentUpon>
+      <LastGenOutput>SiteModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -211,7 +260,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -234,6 +285,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
