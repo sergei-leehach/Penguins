@@ -13,10 +13,10 @@ namespace SiteDevelopment.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class SiteEntities : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public SiteEntities()
+            : base("name=SiteEntities")
         {
         }
     

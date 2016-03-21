@@ -1,12 +1,13 @@
 ﻿@model SiteDevelopment.Models.InputData
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @*<img class="img-responsive" src="~/Images/Board Background/@source" />*@
 
 <div class="row substrate">
-    <form action="/" method="POST" class="form-horizontal">
+    <form action="/Generator" method="POST" class="form-horizontal">
 
         <div class="row">
 
@@ -139,7 +140,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <select class="team-dropdown form-control">
-                                        <option class="team-dropdown" id="result" name="TypeOfWin" disabled selected>Итог</option>
+                                        <option class="team-dropdown" id="result" name="result" disabled selected>Итог</option>
                                         @{
                                             foreach (string item in ViewBag.Result)
                                             {

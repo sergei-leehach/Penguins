@@ -51,7 +51,7 @@ namespace ImageTester
             data.AwayTeamLogo = new GeneratorController().SetTeamLogo(data.AwayTeamShortName);
 
 
-            data.TypeOfWin = TypeOfWin.Shootout;
+            data.Result = TypeOfResult.SO;
             data.TypeOfBoard = TypeOfBoard.Preview;
 
             ImageGeneration.ImageProcessing(data);

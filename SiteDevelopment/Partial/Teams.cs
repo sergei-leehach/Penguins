@@ -34,7 +34,7 @@ namespace SiteDevelopment.Models
                 }
                 else
                 {
-                    if (match.Result == TypeOfWin.OverTime || match.Result == TypeOfWin.Shootout)
+                    if (match.Result == TypeOfResult.OT || match.Result == TypeOfResult.SO)
                     {
                         HomeGames.Add(Streak.OT);
                     }
@@ -55,7 +55,7 @@ namespace SiteDevelopment.Models
                 }
                 else
                 {
-                    if (match.Result == TypeOfWin.OverTime || match.Result == TypeOfWin.Shootout)
+                    if (match.Result == TypeOfResult.OT || match.Result == TypeOfResult.SO)
                     {
                         AwayGames.Add(Streak.OT);
                     }
@@ -80,7 +80,7 @@ namespace SiteDevelopment.Models
                     }
                     else
                     {
-                        if (match.Result == TypeOfWin.OverTime || match.Result == TypeOfWin.Shootout)
+                        if (match.Result == TypeOfResult.OT || match.Result == TypeOfResult.SO)
                         {
                             AllGames.Add(Streak.OT);
                         }
@@ -95,7 +95,7 @@ namespace SiteDevelopment.Models
                     }
                     else
                     {
-                        if (match.Result == TypeOfWin.OverTime || match.Result == TypeOfWin.Shootout)
+                        if (match.Result == TypeOfResult.OT || match.Result == TypeOfResult.SO)
                         {
                             AllGames.Add(Streak.OT);
                         }

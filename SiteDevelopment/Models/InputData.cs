@@ -20,6 +20,6 @@ namespace SiteDevelopment.Models
         public int HomeTeamScore { get; set; }
         public int AwayTeamScore { get; set; }
         public string BackgroundImage { get; set; }
-        public TypeOfWin TypeOfWin { get; set; }
+        public TypeOfResult Result { get; set; }
     }
 }

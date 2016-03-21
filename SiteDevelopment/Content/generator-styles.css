@@ -15,9 +15,10 @@
 body {
     font-family: "Jura";
     font-weight: bold;
-    background-image: url("/Images/Site Background/penguins-background.jpg");
+    background-color: white;
+    /*background-image: url("/Images/Site Background/penguins-background.jpg");
     background-size: auto;
-    background-position-x: center;
+    background-position-x: center;*/
     height:auto;
 }
 
@@ -69,10 +70,6 @@ label {
 .substrate {
     background-color: white;
     filter: blur(5px);
-}
-
-.s {
-    background-color: black;
 }
 
 .carousel {

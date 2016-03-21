@@ -54,12 +54,12 @@ namespace SiteDevelopment.Repository
 
             if (data.TypeOfBoard != TypeOfBoard.Preview)
             {
-                switch (data.TypeOfWin)
+                switch (data.Result)
                 {
-                    case TypeOfWin.OverTime:
+                    case TypeOfResult.OT:
                         g.DrawString("(OT)", addFont, Brushes.Black, new Point(centerPoint, 550), format);
                         break;
-                    case TypeOfWin.Shootout:
+                    case TypeOfResult.SO:
                         g.DrawString("(SO)", addFont, Brushes.Black, new Point(centerPoint, 550), format);
                         break;
                 }
@@ -118,8 +118,6 @@ namespace SiteDevelopment.Repository
 
             link = $@"{directory}\{nameOfFile}";
             imageTemplate.Save(link);
-
-
 
             return link;
         }

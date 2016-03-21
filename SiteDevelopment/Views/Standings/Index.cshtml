@@ -1,0 +1,106 @@
+﻿@model IEnumerable<SiteDevelopment.Models.Standings>
+@using SiteDevelopment.Models;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Eastern</h2>
+
+<div class="container substrate">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                National Hockey League
+            </th>
+            <th>
+                <span>GP</span>
+            </th>
+            <th>
+                <span>W</span>
+            </th>
+            <th>
+                <span>L</span>
+            </th>
+            <th>
+                <span>OT</span>
+            </th>
+            <th>
+                <span>PTS</span>
+            </th>
+            <th>
+                <span>ROW</span>
+            </th>
+            <th>
+                <span>GF</span>
+            </th>
+            <th>
+                <span>GA</span>
+            </th>
+            <th>
+                <span>DIFF</span>
+            </th>
+            <th>
+                <span>HOME</span>
+            </th>
+            <th>
+                <span>AWAY</span>
+            </th>
+            <th>
+                <span>S/O</span>
+            </th>
+            <th>
+                <span>L10</span>
+            </th>
+            <th>
+                <span>STRK</span>
+            </th>
+        </tr>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Team.Name</td>
+                    <td>@item.GamesPlayed</td>
+                    <td>@item.Wins</td>
+                    <td>@item.Losses</td>
+                    <td>@item.OT</td>
+                    <td>@item.Points</td>
+                    <td>@item.ROW</td>
+                    <td>@item.GoalsFor</td>
+                    <td>@item.GoalsAgainst</td>
+                    <td>@item.GoalDifferential</td>
+                    <td>@item.HomeWins - @item.HomeLosses - @item.HomeOT</td>
+                    <td>@item.AwayWins - @item.AwayLosses - @item.AwayOT</td>
+                    <td>@item.ShootoutWins - @item.ShootoutLosses</td>
+                    <td>@item.LastWins - @item.LastLosses - @item.LastOT</td>
+
+                    @{
+                        if (item.Team.AllGames.Count() == 0)
+                        {
+                            continue;
+                        }
+                        Streak lastGame = item.Team.AllGames.Last();
+                        string s = string.Empty;
+
+                        switch (lastGame)
+                        {
+                            case Streak.Win:
+                                s = item.Streak == 1 ? "Win" : "Wins";
+                                break;
+                            case Streak.Loss:
+                                s = item.Streak == 1 ? "Loss" : "Losses";
+                                break;
+                            case Streak.OT:
+                                s = "OT";
+                                break;
+                        }
+                    }
+
+                    <td>@item.Streak @s</td>
+                </tr>
+                        }
+        }
+    </table>
+</div>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SiteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="NhlTable.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Matches">
           <Key>
             <PropertyRef Name="MatchesID" />
@@ -15,7 +15,7 @@
           <Property Name="HomeTeamScore" Type="int" Nullable="false" />
           <Property Name="AwayTeamScore" Type="int" Nullable="false" />
           <Property Name="Result" Type="int" Nullable="false" />
-          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Seasons">
           <Key>
@@ -23,6 +23,7 @@
           </Key>
           <Property Name="SeasonsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Season" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="IsCurrent" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Standings">
           <Key>
@@ -114,7 +115,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SiteModelStoreContainer">
+        <EntityContainer Name="NhlTableStoreContainer">
           <EntitySet Name="Matches" EntityType="Self.Matches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seasons" EntityType="Self.Seasons" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Standings" EntityType="Self.Standings" Schema="dbo" store:Type="Tables" />
@@ -136,10 +137,11 @@
             <End Role="Standings" EntitySet="Standings" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="SiteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="NhlTable" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Matches">
           <Key>
             <PropertyRef Name="MatchesID" />
@@ -149,8 +151,8 @@
           <Property Name="AwayTeamID" Type="Int32" Nullable="false" />
           <Property Name="HomeTeamScore" Type="Int32" Nullable="false" />
           <Property Name="AwayTeamScore" Type="Int32" Nullable="false" />
-          <Property Name="Result" Type="SiteModel.TypeOfWin" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Result" Type="NhlTable.TypeOfResult" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="7" />
           <NavigationProperty Name="AwayTeam" Relationship="Self.FK_Matches_AwayTeam" FromRole="Matches" ToRole="Teams" />
           <NavigationProperty Name="HomeTeam" Relationship="Self.FK_Matches_HomeTeam" FromRole="Matches" ToRole="Teams" />
         </EntityType>
@@ -160,6 +162,7 @@
           </Key>
           <Property Name="SeasonsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Season" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="IsCurrent" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Standings" Relationship="Self.FK_Standings_Seasons" FromRole="Seasons" ToRole="Standings" />
         </EntityType>
         <EntityType Name="Standings">
@@ -257,7 +260,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SiteEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Matches" EntityType="Self.Matches" />
           <EntitySet Name="Seasons" EntityType="Self.Seasons" />
           <EntitySet Name="Standings" EntityType="Self.Standings" />
@@ -279,19 +282,19 @@
             <End Role="Standings" EntitySet="Standings" />
           </AssociationSet>
         </EntityContainer>
-        <EnumType Name="TypeOfWin" a:ExternalTypeName="TypeOfWin" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
-          <Member Name="Fulltime" />
-          <Member Name="Overtime" />
-          <Member Name="Shootout" />
+        <EnumType Name="TypeOfResult" a:ExternalTypeName="TypeOfResult" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+          <Member Name="FT" />
+          <Member Name="OT" />
+          <Member Name="SO" />
         </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SiteModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="NhlTableStoreContainer" CdmEntityContainer="SiteEntities">
           <EntitySetMapping Name="Matches">
-            <EntityTypeMapping TypeName="SiteModel.Matches">
+            <EntityTypeMapping TypeName="NhlTable.Matches">
               <MappingFragment StoreEntitySet="Matches">
                 <ScalarProperty Name="MatchesID" ColumnName="MatchesID" />
                 <ScalarProperty Name="HomeTeamID" ColumnName="HomeTeamID" />
@@ -304,15 +307,16 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Seasons">
-            <EntityTypeMapping TypeName="SiteModel.Seasons">
+            <EntityTypeMapping TypeName="NhlTable.Seasons">
               <MappingFragment StoreEntitySet="Seasons">
                 <ScalarProperty Name="SeasonsID" ColumnName="SeasonsID" />
                 <ScalarProperty Name="Season" ColumnName="Season" />
+                <ScalarProperty Name="IsCurrent" ColumnName="IsCurrent" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Standings">
-            <EntityTypeMapping TypeName="SiteModel.Standings">
+            <EntityTypeMapping TypeName="NhlTable.Standings">
               <MappingFragment StoreEntitySet="Standings">
                 <ScalarProperty Name="TeamID" ColumnName="TeamID" />
                 <ScalarProperty Name="StandingsID" ColumnName="StandingsID" />
@@ -342,7 +346,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Teams">
-            <EntityTypeMapping TypeName="SiteModel.Teams">
+            <EntityTypeMapping TypeName="NhlTable.Teams">
               <MappingFragment StoreEntitySet="Teams">
                 <ScalarProperty Name="Division" ColumnName="Division" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

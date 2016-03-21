@@ -8,11 +8,11 @@ namespace SiteDevelopment.Repository
 {
     public partial class SiteRepository : IDisposable
     {
-        private Entities _db;
+        private SiteEntities _db;
 
         public SiteRepository()
         {
-            _db = new Entities();
+            _db = new SiteEntities();
         }
 
         public void Dispose()
@@ -20,9 +20,62 @@ namespace SiteDevelopment.Repository
             _db.Dispose();
         }
 
+        private Seasons GetCurrentSeason()
+        {
+            var season = (from s in _db.Seasons where s.IsCurrent == true select s).ToList();
+
+            if (season.Any())
+            {
+                return season.LastOrDefault();
+            }
+
+            return null;
+        }
+
+        public void CreateStandings()
+        {
+            var currentSeason = GetCurrentSeason();
+
+            foreach(var team in _db.Teams)
+            {
+                Standings s = new Standings();
+                s.Seasons = currentSeason;
+                s.Team = team;
+
+                _db.Standings.Add(s);
+            }
+
+            _db.SaveChanges();
+        }
+
+        public IEnumerable<Standings> GetLeague()
+        {
+            var currentSeason = GetCurrentSeason();
+
+            var league = from s in _db.Standings /*where s.Seasons == currentSeason*/ orderby s.Points orderby s.Team.Name select s;
+
+            return league.ToList();
+        }
+
+        public Dictionary<int, string> GetTeams()
+        {
+            Dictionary<int, string> teams = new Dictionary<int, string>();
+            var collection = _db.Teams;
+
+            foreach (var item in collection)
+            {
+                teams.Add(item.TeamID, item.Name);
+            }
+
+            return teams;
+        }
+
         public void NhlTableGeneration(Matches match)
         {
             _db.Matches.Add(match);
+
+            match.AwayTeam = _db.Teams.Find(match.AwayTeamID);
+            match.HomeTeam = _db.Teams.Find(match.HomeTeamID);
 
             Teams winningTeam;
             Teams losingTeam;
@@ -47,25 +100,28 @@ namespace SiteDevelopment.Repository
                 losingTeam = match.AwayTeam;
                 losersGoals = match.AwayTeamScore;
             }
+            var currentSeason = GetCurrentSeason();
 
-            Standings winStat = (from x in winningTeam.Standings where x.Seasons.Season == "15/16" select x).FirstOrDefault();
-            Standings loseStat = (from x in losingTeam.Standings where x.Seasons.Season == "15/16" select x).FirstOrDefault();
+            Standings winStat = (from x in winningTeam.Standings where x.Seasons == currentSeason select x).LastOrDefault();
+            Standings loseStat = (from x in losingTeam.Standings where x.Seasons == currentSeason select x).LastOrDefault();
 
             winStat.GamesPlayed += 1;
             loseStat.GamesPlayed += 1;
 
             switch (match.Result)
             {
-                case TypeOfWin.Fulltime:
+                case TypeOfResult.FT:
                     FulltimeCounter(match, winStat, loseStat, winnersGoals, losersGoals);
                     break;
-                case TypeOfWin.OverTime:
+                case TypeOfResult.OT:
                     OvertimeCounter(match, winStat, loseStat, winnersGoals, losersGoals);
                     break;
-                case TypeOfWin.Shootout:
+                case TypeOfResult.SO:
                     ShootoutCounter(match, winStat, loseStat, winnersGoals, losersGoals);
                     break;
             }
+
+            _db.SaveChanges();
         }
 
         private void FulltimeCounter(Matches match, Standings winner, Standings loser, int winnerGoals, int loserGoals)
@@ -187,7 +243,7 @@ namespace SiteDevelopment.Repository
         [Obsolete]
         private void AwayHomeLoser(Matches match, Standings loser)
         {
-            if (match.Result == TypeOfWin.Fulltime)
+            if (match.Result == TypeOfResult.FT)
             {
                 if (loser.Team.Name == match.AwayTeam.Name)
                 {

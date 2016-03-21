@@ -23,7 +23,7 @@ namespace SiteDevelopment.Repository
         {
             connection = new SqlConnection(ConnectionString);
             
-            sqlQuery = "Select Team from TableOfTeams";
+            sqlQuery = "Select Name from Teams";
             command = new SqlCommand(sqlQuery, connection);
             connection.Open();
 
@@ -39,7 +39,7 @@ namespace SiteDevelopment.Repository
         {
             connection = new SqlConnection(ConnectionString);
 
-            sqlQuery = $"Select City_Area, Arena from TableOfTeams where Team = '{s}'";
+            sqlQuery = $"Select City_Area, Arena from Teams where Name = '{s}'";
             command = new SqlCommand(sqlQuery, connection);
             connection.Open();
 
@@ -60,7 +60,7 @@ namespace SiteDevelopment.Repository
         {
             connection = new SqlConnection(ConnectionString);
 
-            sqlQuery = $"Select ShortTeamName from TableOfTeams where Team = '{name}'";
+            sqlQuery = $"Select ShortTeamName from Teams where Name = '{name}'";
             command = new SqlCommand(sqlQuery, connection);
             connection.Open();
             command.Prepare();

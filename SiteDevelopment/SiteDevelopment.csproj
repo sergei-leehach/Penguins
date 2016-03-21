@@ -129,40 +129,42 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GeneratorController.cs" />
+    <Compile Include="Controllers\MatchesController.cs" />
+    <Compile Include="Controllers\StandingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entity.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Entity.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Entity.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Entity.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\InputData.cs" />
     <Compile Include="Models\Matches.cs">
-      <DependentUpon>SiteModel.tt</DependentUpon>
+      <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Seasons.cs">
-      <DependentUpon>SiteModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SiteModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SiteModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SiteModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SiteModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SiteModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SiteModel.edmx</DependentUpon>
+      <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Standings.cs">
-      <DependentUpon>SiteModel.tt</DependentUpon>
+      <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Streak.cs" />
     <Compile Include="Models\Teams.cs">
-      <DependentUpon>SiteModel.tt</DependentUpon>
+      <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TypeOfBoard.cs" />
-    <Compile Include="Models\TypeOfWin.cs" />
+    <Compile Include="Models\TypeOfResult.cs" />
     <Compile Include="Partial\Teams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\GraphicsExtention.cs" />
@@ -188,12 +190,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <EntityDeploy Include="Models\SiteModel.edmx">
+    <EntityDeploy Include="Models\Entity.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SiteModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>Entity.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\SiteModel.edmx.diagram">
-      <DependentUpon>SiteModel.edmx</DependentUpon>
+    <Content Include="Models\Entity.edmx.diagram">
+      <DependentUpon>Entity.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Images\Board Background\arena-board.jpg" />
@@ -229,15 +231,15 @@
     <Content Include="Images\Logos\WPG.png" />
     <Content Include="Images\Logos\WSH.png" />
     <Content Include="Images\Site Background\penguins-background.jpg" />
-    <Content Include="Models\SiteModel.Context.tt">
+    <Content Include="Models\Entity.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SiteModel.edmx</DependentUpon>
-      <LastGenOutput>SiteModel.Context.cs</LastGenOutput>
+      <DependentUpon>Entity.edmx</DependentUpon>
+      <LastGenOutput>Entity.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\SiteModel.tt">
+    <Content Include="Models\Entity.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SiteModel.edmx</DependentUpon>
-      <LastGenOutput>SiteModel.cs</LastGenOutput>
+      <DependentUpon>Entity.edmx</DependentUpon>
+      <LastGenOutput>Entity.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
@@ -270,16 +272,19 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Generator\Index.cshtml" />
+    <Content Include="Views\Standings\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Matches\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\Posters\Preview\" />
     <Folder Include="Images\Posters\Recap\" />
+    <Folder Include="Views\Download_Games\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

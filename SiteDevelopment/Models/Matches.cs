@@ -19,7 +19,7 @@ namespace SiteDevelopment.Models
         public int AwayTeamID { get; set; }
         public int HomeTeamScore { get; set; }
         public int AwayTeamScore { get; set; }
-        public TypeOfWin Result { get; set; }
+        public TypeOfResult Result { get; set; }
         public System.DateTime Date { get; set; }
     
         public virtual Teams AwayTeam { get; set; }

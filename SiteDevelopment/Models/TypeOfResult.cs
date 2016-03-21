@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace SiteDevelopment.Models
 {
-    public enum TypeOfWin
+    public enum TypeOfResult
     {
-        Fulltime, OverTime, Shootout 
+        FT,
+        OT,
+        SO, 
     }
 }

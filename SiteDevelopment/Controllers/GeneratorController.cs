@@ -20,12 +20,13 @@ namespace SiteDevelopment.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(InputData data)
+        public ActionResult Index(InputData data, string result)
         {
             data.AwayTeamShortName = DbQuery.GetShortName(data.AwayTeam);
             data.HomeTeamShortName = DbQuery.GetShortName(data.HomeTeam);
             data.HomeTeamLogo = SetTeamLogo(data.HomeTeamShortName);
             data.AwayTeamLogo = SetTeamLogo(data.AwayTeamShortName);
+
 
             ImageGeneration.ImageProcessing(data);
 

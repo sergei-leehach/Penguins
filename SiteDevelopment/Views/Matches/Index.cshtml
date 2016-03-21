@@ -1,0 +1,63 @@
+﻿@model SiteDevelopment.Models.Matches
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<form action="/Matches" method="POST" class="form-horizontal">
+    <div class="container substrate">
+
+        <div class="form-group">
+            <label class="col-lg-5">Гостевая команда</label>
+            <div class="col-lg-7">
+                <select class="team-dropdown form-control" name="AwayTeamID">
+                    <option class="team-dropdown" disabled selected>Выберите команду...</option>
+                    @{
+                        foreach (var item in ViewBag.DropDown)
+                        {
+                            <option class="team-dropdown-clean" value="@item.Key">@item.Value</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-lg-5">Домашняя команда</label>
+            <div class="col-lg-7">
+                <select class="team-dropdown form-control" name="HomeTeamID">
+                    <option class="team-dropdown" disabled selected>Выберите команду...</option>
+                    @{
+                        foreach (var item in ViewBag.DropDown)
+                        {
+                            <option class="team-dropdown-clean" value="@item.Key">@item.Value</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div id="scoreboard" class="form-group">
+            <label class="col-lg-5">Счёт матча</label>
+            <div class="col-lg-2">
+                <input class="form-control" type="number" name="AwayTeamScore" />
+            </div>
+            <div class="col-lg-2">
+                <input class="form-control" type="number" name="HomeTeamScore" />
+            </div>
+            <div class="col-lg-3">
+                <select class="team-dropdown form-control">
+                    <option class="team-dropdown" id="result" name="Result" disabled selected>Итог</option>
+                    @{
+                        foreach (string item in ViewBag.Result)
+                        {
+                            <option class="team-dropdown-clean" value="@item">@item.ToString()</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-default">Создать матч</button>
+        <button type="reset" class="btn btn-default">Сбросить данные</button>
+    </div>
+</form>

@@ -11,11 +11,11 @@ namespace SiteDevelopment.Repository
     {
         public static List<string> GetResultField()
         {
-            var list = new List<TypeOfWin>
+            var list = new List<TypeOfResult>
             {
-                TypeOfWin.Fulltime,
-                TypeOfWin.OverTime,
-                TypeOfWin.Shootout,
+                TypeOfResult.FT,
+                TypeOfResult.OT,
+                TypeOfResult.SO,
             };
 
             var result = new List<string>();
@@ -24,13 +24,13 @@ namespace SiteDevelopment.Repository
             {
                 switch (item)
                 {
-                    case TypeOfWin.Fulltime:
+                    case TypeOfResult.FT:
                         result.Add("FT");
                         break;
-                    case TypeOfWin.OverTime:
+                    case TypeOfResult.OT:
                         result.Add("OT");
                         break;
-                    case TypeOfWin.Shootout:
+                    case TypeOfResult.SO:
                         result.Add("SO");
                         break;
                     default:
