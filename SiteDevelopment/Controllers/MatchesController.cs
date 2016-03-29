@@ -26,6 +26,7 @@ namespace SiteDevelopment.Controllers
         [HttpPost]
         public ActionResult Index(Matches match)
         {
+            //match.Result = (TypeOfResult) Enum.Parse(typeof (TypeOfResult), result); [ModelBinder(typeof(MatchModelBinder))] 
             _db.NhlTableGeneration(match);
             return RedirectToAction("Index", "Standings");
         }

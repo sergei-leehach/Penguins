@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using SiteDevelopment.Models;
+using SiteDevelopment.Repository;
 
 namespace SiteDevelopment
 {
@@ -16,6 +18,9 @@ namespace SiteDevelopment
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ModelBinders.Binders.Add(typeof(Matches), new EnumPropertyBinder());
+            ModelBinders.Binders.Add(typeof(InputData), new EnumPropertyBinder());
         }
     }
 }

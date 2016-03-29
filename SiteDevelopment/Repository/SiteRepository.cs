@@ -48,26 +48,31 @@ namespace SiteDevelopment.Repository
             _db.SaveChanges();
         }
 
+        public IEnumerable<Standings> GetDivision()
+        {
+            var currentSeason = GetCurrentSeason();
+
+            var divisions = from s in _db.Standings orderby s.Team.Division /*orderby s.Points*/ select s;
+            
+            return divisions.ToList();
+        } 
+             
         public IEnumerable<Standings> GetLeague()
         {
             var currentSeason = GetCurrentSeason();
 
-            var league = from s in _db.Standings /*where s.Seasons == currentSeason*/ orderby s.Points orderby s.Team.Name select s;
+            var league = from s in _db.Standings /*where s.Seasons == currentSeason*/ orderby s.Points descending select s;
 
             return league.ToList();
         }
 
-        public Dictionary<int, string> GetTeams()
+        public IOrderedEnumerable<KeyValuePair<int, string>> GetTeams()
         {
-            Dictionary<int, string> teams = new Dictionary<int, string>();
             var collection = _db.Teams;
+            var y = collection.ToDictionary(item => item.TeamID, item => item.Name);
+            var s = y.OrderBy(x => x.Value);
 
-            foreach (var item in collection)
-            {
-                teams.Add(item.TeamID, item.Name);
-            }
-
-            return teams;
+            return s;
         }
 
         public void NhlTableGeneration(Matches match)

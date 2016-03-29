@@ -54,7 +54,7 @@ namespace ImageTester
             data.Result = TypeOfResult.SO;
             data.TypeOfBoard = TypeOfBoard.Preview;
 
-            ImageGeneration.ImageProcessing(data);
+            //ImageGeneration.ImageProcessing(data);
             Assert.AreEqual(string.Empty, "");
 
         }

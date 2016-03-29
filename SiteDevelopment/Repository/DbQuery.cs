@@ -14,83 +14,83 @@ namespace SiteDevelopment.Repository
         private const string ConnectionString =
             @"Server=localhost\SQLEXPRESS; Database=Site Development; Trusted_Connection=True;";
 
-        private static string sqlQuery = string.Empty;
-        private static SqlConnection connection;
-        private static SqlCommand command;
-        private static SqlDataReader reader;
+        private static string _sqlQuery = string.Empty;
+        private static SqlConnection _connection;
+        private static SqlCommand _command;
+        private static SqlDataReader _reader;
 
         public static IEnumerable<string> DropDownListGeneration()
         {
-            connection = new SqlConnection(ConnectionString);
+            _connection = new SqlConnection(ConnectionString);
             
-            sqlQuery = "Select Name from Teams";
-            command = new SqlCommand(sqlQuery, connection);
-            connection.Open();
+            _sqlQuery = "Select Name from Teams";
+            _command = new SqlCommand(_sqlQuery, _connection);
+            _connection.Open();
 
-            reader = command.ExecuteReader();
+            _reader = _command.ExecuteReader();
 
-            var collection = (from DbDataRecord item in reader select item.GetString(0)).ToList();
+            var collection = (from DbDataRecord item in _reader select item.GetString(0)).ToList();
             collection.Sort();
-            connection.Close();
+            _connection.Close();
             return collection;
         }
 
         public static string[] GetPlace (string s)
         {
-            connection = new SqlConnection(ConnectionString);
+            _connection = new SqlConnection(ConnectionString);
 
-            sqlQuery = $"Select City_Area, Arena from Teams where Name = '{s}'";
-            command = new SqlCommand(sqlQuery, connection);
-            connection.Open();
+            _sqlQuery = $"Select City_Area, Arena from Teams where Name = '{s}'";
+            _command = new SqlCommand(_sqlQuery, _connection);
+            _connection.Open();
 
-            reader = command.ExecuteReader();
+            _reader = _command.ExecuteReader();
             string[] result = new string[2];
 
-            while (reader.Read())
+            while (_reader.Read())
             {
-                result[0] = reader["City_Area"].ToString();
-                result[1] = reader["Arena"].ToString();
+                result[0] = _reader["City_Area"].ToString();
+                result[1] = _reader["Arena"].ToString();
             }              
 
-            connection.Close();
+            _connection.Close();
             return result;
         }
 
         public static string GetShortName(string name)
         {
-            connection = new SqlConnection(ConnectionString);
+            _connection = new SqlConnection(ConnectionString);
 
-            sqlQuery = $"Select ShortTeamName from Teams where Name = '{name}'";
-            command = new SqlCommand(sqlQuery, connection);
-            connection.Open();
-            command.Prepare();
+            _sqlQuery = $"Select ShortTeamName from Teams where Name = '{name}'";
+            _command = new SqlCommand(_sqlQuery, _connection);
+            _connection.Open();
+            _command.Prepare();
 
-            reader = command.ExecuteReader();
+            _reader = _command.ExecuteReader();
             string shortName = string.Empty;
 
-            while (reader.Read())
+            while (_reader.Read())
             {
-                shortName = reader["ShortTeamName"].ToString();
+                shortName = _reader["ShortTeamName"].ToString();
             }
 
-            connection.Close();
+            _connection.Close();
             return shortName;
         }
 
         public static IEnumerable<string> GetAllBoards()
         {
-            connection = new SqlConnection(ConnectionString);
+            _connection = new SqlConnection(ConnectionString);
 
-            sqlQuery = $"Select ImageName from Boards";
-            command = new SqlCommand(sqlQuery, connection);
+            _sqlQuery = $"Select ImageName from Boards";
+            _command = new SqlCommand(_sqlQuery, _connection);
             var boards = new List<string>();
-            connection.Open();
+            _connection.Open();
 
-            reader = command.ExecuteReader();
+            _reader = _command.ExecuteReader();
 
-            while (reader.Read())
+            while (_reader.Read())
             {
-                boards.Add(reader["ImageName"].ToString());
+                boards.Add(_reader["ImageName"].ToString());
             }
 
             return boards;

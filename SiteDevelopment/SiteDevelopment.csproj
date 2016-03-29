@@ -130,10 +130,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GeneratorController.cs" />
     <Compile Include="Controllers\MatchesController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\StandingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603281908095_init.cs" />
+    <Compile Include="Migrations\201603281908095_init.Designer.cs">
+      <DependentUpon>201603281908095_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Entity.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -153,6 +160,8 @@
     <Compile Include="Models\Matches.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\News.cs" />
+    <Compile Include="Models\NewsContext.cs" />
     <Compile Include="Models\Seasons.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
@@ -160,16 +169,20 @@
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Streak.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Teams.cs">
       <DependentUpon>Entity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TypeOfBoard.cs" />
     <Compile Include="Models\TypeOfResult.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Partial\Teams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\GraphicsExtention.cs" />
     <Compile Include="Repository\DbQuery.cs" />
     <Compile Include="Repository\ImageGeneration.cs" />
+    <Compile Include="Repository\NewsRepository.cs" />
+    <Compile Include="Repository\ResultPropertyBinder.cs" />
     <Compile Include="Repository\ServiceFunctions.cs" />
     <Compile Include="Repository\SiteRepository.cs" />
   </ItemGroup>
@@ -279,6 +292,8 @@
     <Content Include="Views\Standings\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Matches\Index.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\News\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -293,6 +308,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201603281908095_init.resx">
+      <DependentUpon>201603281908095_init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

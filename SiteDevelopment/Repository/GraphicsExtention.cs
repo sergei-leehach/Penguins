@@ -28,7 +28,7 @@ namespace SiteDevelopment.Repository
             int destHeight;
             context.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
-            if (width > height)
+            if (width < height)
             {
                 ratio = height/(double) width;
                 destWidth = sourceRect.Width;

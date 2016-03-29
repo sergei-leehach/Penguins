@@ -1,0 +1,23 @@
+﻿@model News
+@using SiteDevelopment.Models;
+
+@{
+    ViewBag.Title = "Add News";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container substrate">
+    <h1>Create News</h1>
+
+    @using (Html.BeginForm("Create", "News"))
+    {
+        @Html.LabelFor(x => x.Title);
+        @Html.TextBoxFor(x => x.Title);
+
+        @Html.LabelFor(x => x.MainText);
+        @Html.TextAreaFor(x => x.MainText);
+
+        <input type="submit" value="Submit" />
+    }  
+    
+</div>

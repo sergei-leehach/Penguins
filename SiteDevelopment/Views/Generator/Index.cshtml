@@ -4,8 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<img class="img-responsive" src="~/Images/Board Background/@source" />*@
-
 <div class="row substrate">
     <form action="/Generator" method="POST" class="form-horizontal">
 
@@ -36,7 +34,7 @@
                                         {
                                             break;
                                         }
-                                        @Html.Raw($"<div data-target=\"#carousel\" data-slide-to=\"{currentNumber}\" class=\"thumb\"><img src=\"/Images/Board Background/{ViewBag.Images[currentNumber]}\"></div>");
+                                        @Html.Raw($"<div data-target=\"#carousel\" data-slide-to=\"{currentNumber}\" class=\"thumb\"><img onclick=\"SetImage(this);\" src=\"/Images/Board Background/{ViewBag.Images[currentNumber]}\"></div>");
 
                                         currentNumber++;
                                     }
@@ -63,22 +61,23 @@
             <div id="form" class="col-lg-12">
                 <h4>Тип афиши</h4>
 
-                <button class="btn btn-primary pit-style" name="TypeOfBoard" type="reset" data-toggle="collapse" data-target="#show-event" onclick="ShowPreview();" style="outline:none;">
+                <button class="btn btn-primary pit-style" type="button" data-toggle="collapse" data-target="#show-event" onclick="SetPreview();" style="outline:none;">
                     Анонс
                 </button>
 
-                <button class="btn btn-primary pit-style" name="TypeOfBoard" type="reset" data-toggle="collapse" data-target="#show-event" onclick="ShowRecap();" style="outline:none;">
+                <button class="btn btn-primary pit-style" type="button" data-toggle="collapse" data-target="#show-event" onclick="SetRecap();" style="outline:none;">
                     Результат
                 </button>
 
                 <div id="show-event" class="collapse">
-                    <div id="image" class="col-lg-6">
+                    <div id="data" class="col-lg-6">
                         <div class="well">
+                            <input id="type" type="text" name="type" />
                             <div class="form-group">
                                 <label class="col-lg-5">Дата матча</label>
                                 <div class="col-lg-7">
                                     <div class="input-group date" id="datetimepicker2">
-                                        <input type="text" class="form-control" name="DateOfAMatch" id="date-input" onkeydown="return false" />
+                                        <input type="text" class="form-control" name="DateOfAMatch" id="date-input" onkeydown="return false"/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -119,28 +118,28 @@
                             <div class="form-group">
                                 <label class="col-lg-5">Место проведения</label>
                                 <div class="col-lg-7">
-                                    <input id="city" class="form-control" type="text" name="Location" readonly="readonly" />
+                                    <input id="city" class="form-control" type="text" name="Location" readonly="readonly"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-lg-5">Арена</label>
                                 <div class="col-lg-7">
-                                    <input id="arena" class="form-control" type="text" name="Arena" readonly="readonly" />
+                                    <input id="arena" class="form-control" type="text" name="Arena" readonly="readonly"/>
                                 </div>
                             </div>
 
                             <div id="scoreboard" class="form-group">
                                 <label class="col-lg-5">Счёт матча</label>
                                 <div class="col-lg-2">
-                                    <input class="form-control" type="number" name="AwayTeamScore" />
+                                    <input class="form-control" type="number" value="0" min="0" max="100" step="1" name="AwayTeamScore"/>
                                 </div>
                                 <div class="col-lg-2">
-                                    <input class="form-control" type="number" name="HomeTeamScore" />
+                                    <input class="form-control" type="number" value="0" min="0" max="100" step="1" name="HomeTeamScore"/>
                                 </div>
                                 <div class="col-lg-3">
-                                    <select class="team-dropdown form-control">
-                                        <option class="team-dropdown" id="result" name="result" disabled selected>Итог</option>
+                                    <select class="team-dropdown form-control" name="result">
+                                        <option class="team-dropdown" id="result" disabled selected>Итог</option>
                                         @{
                                             foreach (string item in ViewBag.Result)
                                             {
@@ -164,10 +163,11 @@
                                     foreach (string item in ViewBag.Images)
                                     {
                                         <div class="item">
-                                            <img src="/Images/Board Background/@item" />
+                                            <img id="chosen-image" src="/Images/Board Background/@item" alt="/Images/Board Background/@item" />
                                         </div>
                                     }
                                 }
+                                <input id="background-image" name="BackgroundImage" type="text"/>
                                 <div class="item active">
                                     <img src="">
                                 </div>

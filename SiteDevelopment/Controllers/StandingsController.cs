@@ -23,7 +23,7 @@ namespace SiteDevelopment.Controllers
             if (league.Count() == 0)
             {
                 _db.CreateStandings();
-                league = _db.GetLeague();
+                //league = _db.GetLeague();
             }
             return View(league);
         }

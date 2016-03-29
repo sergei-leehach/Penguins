@@ -39,14 +39,14 @@
         <div id="scoreboard" class="form-group">
             <label class="col-lg-5">Счёт матча</label>
             <div class="col-lg-2">
-                <input class="form-control" type="number" name="AwayTeamScore" />
+                <input class="form-control" type="number" value="0" min="0" max="100" step="1" name="AwayTeamScore" />
             </div>
             <div class="col-lg-2">
-                <input class="form-control" type="number" name="HomeTeamScore" />
+                <input class="form-control" type="number" value="0" min="0" max="100" step="1" name="HomeTeamScore" />
             </div>
             <div class="col-lg-3">
-                <select class="team-dropdown form-control">
-                    <option class="team-dropdown" id="result" name="Result" disabled selected>Итог</option>
+                <select class="team-dropdown form-control" name="result">
+                    <option class="team-dropdown" id="result" disabled selected>Итог</option>
                     @{
                         foreach (string item in ViewBag.Result)
                         {

@@ -1,0 +1,22 @@
+﻿@model IEnumerable<News>
+@using SiteDevelopment.Models;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container substrate">
+    <h1>All News of Pittsburgh Penguins</h1>
+
+    @using (Html.BeginForm("Index", "News"))
+    {
+        foreach (var item in Model)
+        {
+            <div>
+                @Html.Label(item.Title);
+                @Html.TextBox(item.MainText);
+            </div>
+        }
+    } 
+</div>

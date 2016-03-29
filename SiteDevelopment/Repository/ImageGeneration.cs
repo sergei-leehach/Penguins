@@ -11,7 +11,7 @@ namespace SiteDevelopment.Repository
 {
     public static class ImageGeneration
     {        
-        public static string ImageProcessing(InputData data)
+        public static string ImageProcessing(InputData data, string preview, string recap)
         {                 
             Bitmap imageTemplate = new Bitmap(1280, 960);
 
@@ -25,16 +25,20 @@ namespace SiteDevelopment.Repository
                 LineAlignment = StringAlignment.Center,
                 Alignment = StringAlignment.Center
             };
-  
+            
             Image background = Image.FromFile(data.BackgroundImage);
             Graphics g = Graphics.FromImage(imageTemplate);
+
             g.SmoothingMode = SmoothingMode.HighQuality;
-            g.DrawImage(background, 0, 0);
+            GraphicsExtention.DrawScaledArImage(g, background, new Rectangle(0, 0, 1280, 960));
+            //g.DrawImage(background, 0, 0);
 
             Image home = Image.FromFile(data.HomeTeamLogo);
-            g.DrawImage(home, 790, 200, 400, 400);
+            GraphicsExtention.DrawScaledArImage(g, home, new Rectangle(790, 200, 400, 400));
+            //g.DrawImage(home, 790, 200, 400, 400);
             Image away = Image.FromFile(data.AwayTeamLogo);
-            g.DrawImage(away, 90, 200, 400, 400);
+            GraphicsExtention.DrawScaledArImage(g, away, new Rectangle(90, 200, 400, 400));
+            //g.DrawImage(away, 90, 200, 400, 400);
 
             
             g.DrawString(data.DateOfAMatch.ToString("dd. MMM."), defFont, Brushes.Black, new Point(centerPoint, 50), format);
@@ -68,8 +72,7 @@ namespace SiteDevelopment.Repository
 
             string link;
 
-            const string preview = @"Images\Posters\Preview\";
-            const string recap = @"Images\Posters\Recap\";
+            
             string nameOfFile =
                 $"{data.AwayTeamShortName}_{data.HomeTeamShortName}_{data.DateOfAMatch.ToString("dd_MM")}.png";
             string directory = string.Empty;

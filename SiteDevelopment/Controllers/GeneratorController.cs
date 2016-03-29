@@ -20,17 +20,23 @@ namespace SiteDevelopment.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(InputData data, string result)
+        public ActionResult Index(InputData data)
         {
             data.AwayTeamShortName = DbQuery.GetShortName(data.AwayTeam);
             data.HomeTeamShortName = DbQuery.GetShortName(data.HomeTeam);
             data.HomeTeamLogo = SetTeamLogo(data.HomeTeamShortName);
             data.AwayTeamLogo = SetTeamLogo(data.AwayTeamShortName);
+            data.BackgroundImage = Server.MapPath(data.BackgroundImage);
 
+            string preview = @"Images\Posters\Preview\";
+            preview = SetPath(preview);
+            string recap = @"Images\Posters\Recap\";
+            recap = SetPath(recap);
+            //data.Result = (TypeOfResult) Enum.Parse(typeof (TypeOfResult), result);
 
-            ImageGeneration.ImageProcessing(data);
+            ImageGeneration.ImageProcessing(data, preview, recap);
 
-            return View();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -45,6 +51,17 @@ namespace SiteDevelopment.Controllers
         {
             var path = $@"/Images/Logos/{shortName}.png";
 
+            string result;
+            if (Server == null)
+                result = Directory.GetCurrentDirectory() + path;
+            else
+                result = Server.MapPath(path);
+
+            return result;
+        }
+
+        public string SetPath(string path)
+        {
             string result;
             if (Server == null)
                 result = Directory.GetCurrentDirectory() + path;

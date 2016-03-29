@@ -25,85 +25,97 @@ namespace SiteDevelopment.Models
 
         private IEnumerable<Streak> HomeStreak()
         {
-            List<Streak> HomeGames = new List<Streak>();
+            List<Streak> homeGames = new List<Streak>();
             foreach (var match in MatchesHome)
             {
                 if (match.AwayTeamScore < match.HomeTeamScore)
                 {
-                    HomeGames.Add(Streak.Win);
+                    homeGames.Add(Streak.Win);
                 }
                 else
                 {
                     if (match.Result == TypeOfResult.OT || match.Result == TypeOfResult.SO)
                     {
-                        HomeGames.Add(Streak.OT);
+                        homeGames.Add(Streak.OT);
                     }
-                    HomeGames.Add(Streak.Loss);
+                    else
+                    {
+                        homeGames.Add(Streak.Loss);
+                    }
                 }
             }
-            return HomeGames;
+            return homeGames;
         }
 
         private IEnumerable<Streak> AwayStreak()
         {
-            List<Streak> AwayGames = new List<Streak>();
+            List<Streak> awayGames = new List<Streak>();
             foreach (var match in MatchesAway)
             {
                 if (match.AwayTeamScore > match.HomeTeamScore)
                 {
-                    AwayGames.Add(Streak.Win);
+                    awayGames.Add(Streak.Win);
                 }
                 else
                 {
                     if (match.Result == TypeOfResult.OT || match.Result == TypeOfResult.SO)
                     {
-                        AwayGames.Add(Streak.OT);
+                        awayGames.Add(Streak.OT);
                     }
-                    AwayGames.Add(Streak.Loss);
+                    else
+                    {
+                        awayGames.Add(Streak.Loss);
+                    }                    
                 }
             }
-            return AwayGames;
+            return awayGames;
         }
 
         private IEnumerable<Streak> AllStreak()
         {
-            List<Streak> AllGames = new List<Streak>();
-            var SortMatches = ((from m in MatchesAway select m).Union(from m in MatchesHome select m)).OrderBy(m => m.Date);
+            List<Streak> allGames = new List<Streak>();
+            var sortMatches = ((from m in MatchesAway select m).Union(from m in MatchesHome select m)).OrderBy(m => m.Date);
 
-            foreach (var match in SortMatches)
+            foreach (var match in sortMatches)
             {
                 if (match.AwayTeam.Name == Name)
                 {
                     if (match.AwayTeamScore > match.HomeTeamScore)
                     {
-                        AllGames.Add(Streak.Win);
+                        allGames.Add(Streak.Win);
                     }
                     else
                     {
                         if (match.Result == TypeOfResult.OT || match.Result == TypeOfResult.SO)
                         {
-                            AllGames.Add(Streak.OT);
+                            allGames.Add(Streak.OT);
                         }
-                        AllGames.Add(Streak.Loss);
+                        else
+                        {
+                            allGames.Add(Streak.Loss);
+                        }                      
                     }
                 }
                 else
                 {
                     if (match.AwayTeamScore < match.HomeTeamScore)
                     {
-                        AllGames.Add(Streak.Win);
+                        allGames.Add(Streak.Win);
                     }
                     else
                     {
                         if (match.Result == TypeOfResult.OT || match.Result == TypeOfResult.SO)
                         {
-                            AllGames.Add(Streak.OT);
+                            allGames.Add(Streak.OT);
                         }
-                        AllGames.Add(Streak.Loss);
+                        else
+                        {
+                            allGames.Add(Streak.Loss);
+                        }                      
                     }
                 }
             }
-            return AllGames;
+            return allGames;
         }
     }
 }
