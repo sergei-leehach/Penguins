@@ -1,0 +1,20 @@
+﻿@model SiteDevelopment.Models.News
+
+@{
+    ViewBag.Title = "News";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <h1>
+        @Html.Label(Model.Title)
+    </h1>
+    <p>
+        @Html.Raw(Model.MainText)
+        @Html.Raw(Model.PublicationTime)
+        @Html.Raw(Model.Author.Nickname)
+    </p>
+}
+
+

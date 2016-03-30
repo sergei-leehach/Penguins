@@ -128,6 +128,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\GeneratorController.cs" />
     <Compile Include="Controllers\MatchesController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
@@ -294,6 +295,9 @@
     <Content Include="Views\Matches\Index.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\News\Create.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\News\AddIndex.cshtml" />
+    <Content Include="Views\News\News.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,9 @@
+﻿@model SiteDevelopment.Models.News
+
+<h2>
+    @Html.ActionLink(Model.Title, "News", new {id = Model.NewsId})
+</h2>
+<p>
+    @Html.Raw(Model.PublicationTime) 
+    @Html.Raw(Model.Author.Nickname)
+</p>

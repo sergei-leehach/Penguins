@@ -24,7 +24,24 @@ namespace SiteDevelopment.Repository
         {
             _db.News.Add(news);
             _db.SaveChanges();
-        } 
+        }
+
+        public News GetNews(int id)
+        {
+            var news = _db.News.Where(x => x.NewsId == id).ToList();
+
+            if (news.Any())
+            {
+                return news.FirstOrDefault();
+            }
+            return null;
+        }
+
+        public List<User> GetAuthor()
+        {
+            var author = (from user in _db.Users where user.UserId == 1 select user).ToList();
+            return author;
+        }
 
         public void Dispose()
         {

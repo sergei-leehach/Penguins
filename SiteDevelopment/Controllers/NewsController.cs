@@ -23,10 +23,24 @@ namespace SiteDevelopment.Controllers
         {
             return View();
         }
+
+        public ActionResult AddIndex()
+        {
+            return PartialView("AddIndex");
+        }
+
+        public ActionResult News(int id)
+        {
+            var news = _db.GetNews(id);
+            return View(news);
+        }
+        
         [HttpPost]
         public ActionResult Create(News news)
         {
             news.PublicationTime = DateTime.Now;
+            var author = _db.GetAuthor().ToArray();
+            news.Author = author[0];
             _db.CreateNews(news);
             return RedirectToAction("Index");
         }

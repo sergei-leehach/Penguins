@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<News>
+@using System.ServiceModel.Channels
 @using SiteDevelopment.Models;
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "News";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,12 +12,9 @@
 
     @using (Html.BeginForm("Index", "News"))
     {
-        foreach (var item in Model)
+        foreach (var item in Model.Reverse())
         {
-            <div>
-                @Html.Label(item.Title);
-                @Html.TextBox(item.MainText);
-            </div>
+            @Html.Partial("AddIndex", item)
         }
     } 
 </div>
