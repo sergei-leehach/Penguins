@@ -1,0 +1,7 @@
+﻿@model IEnumerable<Comment>
+@using SiteDevelopment.Models
+
+@foreach (var comment in Model)
+{
+    @Html.Partial("SingleComment", comment);
+}

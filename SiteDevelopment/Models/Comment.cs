@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
+using System.Xml.Serialization;
 
 namespace SiteDevelopment.Models
 {
@@ -18,7 +20,10 @@ namespace SiteDevelopment.Models
 
         public int NewsId { get; set; }
         public int UserId { get; set; }
+
+        [ScriptIgnore]
         public virtual News News { get; set; }
+        [ScriptIgnore]
         public virtual User Author { get; set; }
     }
 }

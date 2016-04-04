@@ -1,20 +1,28 @@
-﻿@model SiteDevelopment.Models.News
+﻿@using SiteDevelopment.Models
+@model SiteDevelopment.Models.News
 
 @{
     ViewBag.Title = "News";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm())
-{
-    <h1>
-        @Html.Label(Model.Title)
-    </h1>
-    <p>
-        @Html.Raw(Model.MainText)
-        @Html.Raw(Model.PublicationTime)
-        @Html.Raw(Model.Author.Nickname)
-    </p>
-}
-
-
+<h1>
+    @Html.Label(Model.Title)
+</h1>
+<div>
+    <div><img src="@Model.Image" alt="sorry tnuc you have some problems with this shit..." /></div>
+    <div>@Html.Raw(Model.MainText)</div>
+    <div>@Html.Raw(Model.Like)</div>
+    <div>@Html.Raw(Model.Dislike)</div>
+    <div>@Html.Raw(Model.Tags)</div>
+    <div>
+        <div>
+            @{
+                Html.RenderPartial("CreateComment", new Comment() { NewsId = Model.NewsId });
+            }
+        </div>
+    </div>
+    <div id="comments">@Html.Partial("Comments", Model.Comments)</div>
+    <div>@Html.Raw(Model.PublicationTime)</div>
+    <div>@Html.Raw(Model.Author.Nickname)</div>
+</div>

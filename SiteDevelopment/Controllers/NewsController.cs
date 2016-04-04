@@ -34,7 +34,26 @@ namespace SiteDevelopment.Controllers
             var news = _db.GetNews(id);
             return View(news);
         }
-        
+
+        public ActionResult Comments(News news)
+        {
+            var model = _db.GetComments(news);
+            return View(model);
+        }
+
+
+        public ActionResult CreateComment()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult CreateComment(Comment comment)
+        {
+            var record = _db.CreateComment(comment);
+            return PartialView("SingleComment", record);
+        }
+
         [HttpPost]
         public ActionResult Create(News news)
         {

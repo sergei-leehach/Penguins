@@ -1,0 +1,13 @@
+﻿@model SiteDevelopment.Models.Comment
+
+@using (Ajax.BeginForm("CreateComment", new AjaxOptions()
+{
+    Url = Url.Action("CreateComment"),
+    OnSuccess = "AddComment",
+    HttpMethod = "POST"
+}))
+{
+    <input hidden="hidden" name="NewsId" value="@Model.NewsId"/>
+    <div><textarea id="text-area" name="Text"></textarea></div>
+    <div><input id="add-comment" type="submit" value="Добавить комментарий" /></div>
+}

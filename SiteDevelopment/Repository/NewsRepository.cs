@@ -43,6 +43,23 @@ namespace SiteDevelopment.Repository
             return author;
         }
 
+        public List<Comment> GetComments(News news)
+        {
+            var comments = (from x in _db.Comments where x.NewsId == news.NewsId select x).ToList();
+
+            return comments;
+        }
+
+        public Comment CreateComment(Comment comment)
+        {
+            comment.Author = _db.Users.Find(1);
+            comment.PublicationTime = DateTime.Now;
+            _db.Comments.Add(comment);
+            _db.SaveChanges();
+
+            return comment;
+        } 
+
         public void Dispose()
         {
             _db.Dispose();

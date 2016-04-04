@@ -1,0 +1,9 @@
+﻿@model SiteDevelopment.Models.Comment
+
+<div>
+    @Html.Raw(Model.Text)
+    @Html.Raw(Model.Like)
+    @Html.Raw(Model.Dislike)
+    @Html.Raw(Model.PublicationTime)
+    @Html.Raw(Model.Author.FirstName)
+</div>
