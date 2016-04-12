@@ -8,11 +8,15 @@ namespace SiteDevelopment.Models
 {
     public class Tag
     {
+        public Tag()
+        {
+            Bundle = new HashSet<Bundle>();
+        }
+
         [Key]
         public int Id { get; set; }        
         public string Title { get; set; }
 
-        public int NewsId { get; set; }
-        public virtual News News { get; set; }
+        public ICollection<Bundle> Bundle { get; set; }
     }
 }

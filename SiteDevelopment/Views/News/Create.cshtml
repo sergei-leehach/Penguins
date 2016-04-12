@@ -6,10 +6,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script>tinymce.init({ selector: 'textarea' });</script>
+
+
 <div class="container substrate">
     <h1>Create News</h1>
 
-    @using (Html.BeginForm("Create", "News"))
+    @using (Html.BeginForm("Create", "News", FormMethod.Post, new { @id = "form" }))
     {
         <div>@Html.TextBoxFor(x => x.Title)</div>
 
@@ -21,7 +26,15 @@
             @Html.TextAreaFor(x => x.MainText)
         </div>
 
-        <div><input type="submit" value="Submit" /></div>
-    }  
-    
+        <select id="tags" multiple class="chosen-select" data-placeholder="Добавить тэги" name="input-tags" style="width: 300px">
+            @foreach (var item in ViewBag.Tags)
+            {
+                <option value="@item.Id">@item.Title</option>
+            }
+        </select>
+
+        <div>
+            <input type="submit" value="Submit" />
+        </div>
+    }
 </div>

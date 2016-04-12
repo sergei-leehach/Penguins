@@ -24,14 +24,14 @@ namespace SiteDevelopment
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js", "~/Scripts/generator-functions.js", "~/Scripts/news-functions.js"));
+                      "~/Scripts/respond.js", "~/Scripts/generator-functions.js", "~/Scripts/news-functions.js", "~/Scripts/chosen.jquery.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/datepicker").Include(
           "~/Scripts/bootstrap-datetimepicker.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css", "~/Content/bootstrap-datetimepicker.min.css",
-                      "~/Content/site.css", "~/Content/generator-styles.css", "~/Content/news-styles.css"));
+                      "~/Content/site.css", "~/Content/generator-styles.css", "~/Content/news-styles.css", "~/Content/chosen.min.css"));
             
         }
     }

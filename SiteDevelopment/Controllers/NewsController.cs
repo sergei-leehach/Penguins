@@ -21,6 +21,7 @@ namespace SiteDevelopment.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.Tags = _db.GetTags();
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace SiteDevelopment.Controllers
 
         [HttpPost]
         public ActionResult Create(News news)
-        {
+         {
             news.PublicationTime = DateTime.Now;
             var author = _db.GetAuthor().ToArray();
             news.Author = author[0];

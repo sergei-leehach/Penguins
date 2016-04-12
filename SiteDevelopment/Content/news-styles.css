@@ -9,3 +9,7 @@
 .news-content {
     font-size: 20px;
 }
+
+.no-results {
+    visibility: hidden;
+}

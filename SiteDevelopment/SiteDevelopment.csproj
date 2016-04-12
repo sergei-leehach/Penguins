@@ -139,7 +139,12 @@
     <Compile Include="Migrations\201603281908095_init.Designer.cs">
       <DependentUpon>201603281908095_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604081442530_Bundle.cs" />
+    <Compile Include="Migrations\201604081442530_Bundle.Designer.cs">
+      <DependentUpon>201604081442530_Bundle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Bundle.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Entity.Context.cs">
       <AutoGen>True</AutoGen>
@@ -185,6 +190,7 @@
     <Compile Include="Repository\ResultPropertyBinder.cs" />
     <Compile Include="Repository\ServiceFunctions.cs" />
     <Compile Include="Repository\SiteRepository.cs" />
+    <Compile Include="Repository\TagsPropertyBinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -193,6 +199,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chosen.min.css" />
     <Content Include="Content\generator-styles.css" />
     <Content Include="Content\news-styles.css" />
     <Content Include="favicon.ico" />
@@ -208,6 +215,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Entity.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Images\Chosen Plugin\chosen-sprite%402x.png" />
+    <Content Include="Images\Chosen Plugin\chosen-sprite.png" />
     <Content Include="Models\Entity.edmx.diagram">
       <DependentUpon>Entity.edmx</DependentUpon>
     </Content>
@@ -259,6 +268,7 @@
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\generator-functions.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -321,6 +331,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201603281908095_init.resx">
       <DependentUpon>201603281908095_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604081442530_Bundle.resx">
+      <DependentUpon>201604081442530_Bundle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -21,6 +21,7 @@ namespace SiteDevelopment
 
             ModelBinders.Binders.Add(typeof(Matches), new EnumPropertyBinder());
             ModelBinders.Binders.Add(typeof(InputData), new EnumPropertyBinder());
+            ModelBinders.Binders.Add(typeof (News), new TagsPropertyBinder());
         }
     }
 }

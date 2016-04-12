@@ -5,7 +5,7 @@
     <div class="news-header">@Html.ActionLink(Model.Title, "News", new { id = Model.NewsId })</div>
     <div class="news-content">Дата публикации: @Html.Raw(Model.PublicationTime)</div>
     <div class="news-content">Автор: @Html.Raw(Model.Author.Nickname)</div>
-    <div class="news-content">Тэги: @Html.Raw(Model.Tags)</div>
+    <div class="news-content">Тэги: @Html.Raw(Model.Bundle)</div>
 </div>
 
 

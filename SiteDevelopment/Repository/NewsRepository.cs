@@ -15,9 +15,15 @@ namespace SiteDevelopment.Repository
             _db = new NewsContext();
         }
 
-        public IEnumerable<News> GetAllNews()
+        public List<News> GetAllNews()
         {
             return _db.News.ToList();
+        }
+
+        public IEnumerable<Tag> GetTags()
+        {
+            var tags = _db.Tags.ToList();
+            return tags;
         }
 
         public void CreateNews(News news)
