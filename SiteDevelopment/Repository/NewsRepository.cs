@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using SiteDevelopment.Models;
@@ -17,7 +18,8 @@ namespace SiteDevelopment.Repository
 
         public List<News> GetAllNews()
         {
-            return _db.News.ToList();
+            var news = _db.News.Include(c => c.Bundle.Select(x => x.Tag)).ToList();
+            return news;
         }
 
         public IEnumerable<Tag> GetTags()
@@ -34,13 +36,28 @@ namespace SiteDevelopment.Repository
 
         public News GetNews(int id)
         {
-            var news = _db.News.Where(x => x.NewsId == id).ToList();
+            var news = _db.News.Where(x => x.NewsId == id).Include(c => c.Bundle.Select(x => x.Tag)).ToList();
 
             if (news.Any())
             {
                 return news.FirstOrDefault();
             }
             return null;
+        }
+
+        public List<News> GetNewsByTagId(int? tagId)
+        {
+            var coll = _db.News.SelectMany(b => b.Bundle.Where(t => t.TagId == tagId).Select(x => x.News)).Include(c => c.Bundle.Select(x => x.Tag)).ToList();
+
+            return coll;
+            //return (from item in _db.News
+            //    let n = new News()
+            //    {
+            //        Bundle = new List<Bundle>()
+            //    }
+            //    from bundle in item.Bundle
+            //    where bundle.TagId == tagId
+            //    select item).ToList();
         }
 
         public List<User> GetAuthor()

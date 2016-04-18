@@ -5,7 +5,13 @@
     <div class="news-header">@Html.ActionLink(Model.Title, "News", new { id = Model.NewsId })</div>
     <div class="news-content">Дата публикации: @Html.Raw(Model.PublicationTime)</div>
     <div class="news-content">Автор: @Html.Raw(Model.Author.Nickname)</div>
-    <div class="news-content">Тэги: @Html.Raw(Model.Bundle)</div>
+    <div class="news-content">
+        Тэги:
+        @foreach (var item in Model.Bundle)
+        {
+            <div>@Html.ActionLink(item.Tag.Title, "Index", new { tagId = item.Tag.Id })</div>
+        }
+    </div>
 </div>
 
 

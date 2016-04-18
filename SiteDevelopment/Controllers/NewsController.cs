@@ -13,10 +13,18 @@ namespace SiteDevelopment.Controllers
     {
         NewsRepository _db = new NewsRepository();
         // GET: News
-        public ActionResult Index()
+        public ActionResult Index(int? tagId)
         {
-            var news = _db.GetAllNews();
-            return View(news);
+            if (tagId == null)
+            {
+                var news = _db.GetAllNews();
+                return View(news);
+            }
+            else
+            {
+                var news = _db.GetNewsByTagId(tagId);
+                return View(news);
+            }
         }
 
         public ActionResult Create()
@@ -57,7 +65,7 @@ namespace SiteDevelopment.Controllers
 
         [HttpPost]
         public ActionResult Create(News news)
-         {
+        {
             news.PublicationTime = DateTime.Now;
             var author = _db.GetAuthor().ToArray();
             news.Author = author[0];

@@ -14,7 +14,18 @@
     <div>@Html.Raw(Model.MainText)</div>
     <div>@Html.Raw(Model.Like)</div>
     <div>@Html.Raw(Model.Dislike)</div>
-    <div>@Html.Raw(Model.Bundle)</div>
+    <div>
+        Тэги:
+        @foreach (var item in Model.Bundle)
+        {
+            string tag = item.Tag.Title;
+            <a href="">@tag</a>
+        }
+    </div>
+    <div>
+        @Html.Raw(Model.PublicationTime)
+        @Html.Raw(Model.Author.Nickname)
+    </div>
     <div>
         <div>
             @{
@@ -23,6 +34,4 @@
         </div>
     </div>
     <div id="comments">@Html.Partial("Comments", Model.Comments)</div>
-    <div>@Html.Raw(Model.PublicationTime)</div>
-    <div>@Html.Raw(Model.Author.Nickname)</div>
 </div>
