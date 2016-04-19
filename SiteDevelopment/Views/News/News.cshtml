@@ -18,12 +18,11 @@
         Тэги:
         @foreach (var item in Model.Bundle)
         {
-            string tag = item.Tag.Title;
-            <a href="">@tag</a>
+            @Html.ActionLink(item.Tag.Title + " ", "Index", new { tagId = item.Tag.Id })
         }
     </div>
     <div>
-        @Html.Raw(Model.PublicationTime)
+        @Html.Raw(Model.PublicationTime.ToString("d.MM.yy HH:mm"))
         @Html.Raw(Model.Author.Nickname)
     </div>
     <div>
