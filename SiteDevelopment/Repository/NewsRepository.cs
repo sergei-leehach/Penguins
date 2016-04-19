@@ -48,16 +48,7 @@ namespace SiteDevelopment.Repository
         public List<News> GetNewsByTagId(int? tagId)
         {
             var coll = _db.News.SelectMany(b => b.Bundle.Where(t => t.TagId == tagId).Select(x => x.News)).Include(c => c.Bundle.Select(x => x.Tag)).ToList();
-
             return coll;
-            //return (from item in _db.News
-            //    let n = new News()
-            //    {
-            //        Bundle = new List<Bundle>()
-            //    }
-            //    from bundle in item.Bundle
-            //    where bundle.TagId == tagId
-            //    select item).ToList();
         }
 
         public List<User> GetAuthor()
@@ -71,6 +62,14 @@ namespace SiteDevelopment.Repository
             var comments = (from x in _db.Comments where x.NewsId == news.NewsId select x).ToList();
 
             return comments;
+        }
+
+        public void DeleteNews(int newsId)
+        {
+            var news = (from n in _db.News where n.NewsId == newsId select n).FirstOrDefault();
+            _db.News.Attach(news);
+            _db.News.Remove(news);
+            _db.SaveChanges();
         }
 
         public Comment CreateComment(Comment comment)

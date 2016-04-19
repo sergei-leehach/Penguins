@@ -1,23 +1,28 @@
 ﻿@using SiteDevelopment.Models
-@model SiteDevelopment.Models.News
+@model News
 
 @{
     ViewBag.Title = "News";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>
-    @Html.Label(Model.Title)
-</h1>
 <div>
-    <div><img src="@Model.Image" alt="sorry tnuc you have some problems with this shit..." /></div>
-    <div>@Html.Raw(Model.MainText)</div>
+    <div>
+        <div class="col-lg-12 news-image"><img src="@Model.Image" alt="sorry tnuc you have some problems with this shit..." class="img-responsive" style="float: left" /></div>
+    </div>
+
+    <div>
+        @Html.Label(Model.Title)
+        <a href="@Url.Action("DeleteNews", "News", new {newsId = Model.NewsId})"><div class="button" style="float: right">Удалить новость</div></a>
+        @Html.Raw(Model.MainText)
+    </div>
+
     <div>@Html.Raw(Model.Like)</div>
     <div>@Html.Raw(Model.Dislike)</div>
     <div>
         Тэги:
         @foreach (var item in Model.Bundle)
-        {
+            {
             @Html.ActionLink(item.Tag.Title + " ", "Index", new { tagId = item.Tag.Id })
         }
     </div>
@@ -33,4 +38,5 @@
         </div>
     </div>
     <div id="comments">@Html.Partial("Comments", Model.Comments)</div>
+
 </div>

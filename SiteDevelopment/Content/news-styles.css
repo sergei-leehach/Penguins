@@ -13,3 +13,7 @@
 .no-results {
     visibility: hidden;
 }
+
+.news-image {
+    padding: 0;
+}

@@ -44,6 +44,12 @@ namespace SiteDevelopment.Controllers
             return View(news);
         }
 
+        public ActionResult DeleteNews(int newsId)
+        {
+            _db.DeleteNews(newsId);
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Comments(News news)
         {
             var model = _db.GetComments(news);
