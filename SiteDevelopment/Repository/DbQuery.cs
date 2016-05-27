@@ -12,7 +12,7 @@ namespace SiteDevelopment.Repository
     public static class DbQuery
     {
         private const string ConnectionString =
-            @"Server=localhost\SQLEXPRESS; Database=Site Development; Trusted_Connection=True;";
+            @"Server=localhost\SQLEXPRESS; Database=SiteDevelopment; Trusted_Connection=True;";
 
         private static string _sqlQuery = string.Empty;
         private static SqlConnection _connection;

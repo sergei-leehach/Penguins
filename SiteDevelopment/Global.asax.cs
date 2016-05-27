@@ -19,7 +19,7 @@ namespace SiteDevelopment
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            ModelBinders.Binders.Add(typeof(Matches), new EnumPropertyBinder());
+            ModelBinders.Binders.Add(typeof(Match), new EnumPropertyBinder());
             ModelBinders.Binders.Add(typeof(InputData), new EnumPropertyBinder());
             ModelBinders.Binders.Add(typeof (News), new TagsPropertyBinder());
         }

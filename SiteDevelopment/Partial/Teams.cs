@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SiteDevelopment.Models
 {
-    public partial class Teams
+    public partial class Team
     {
         public IEnumerable<Streak> HomeGames
         {

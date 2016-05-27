@@ -21,9 +21,9 @@ namespace SiteDevelopment.Models
         public int NewsId { get; set; }
         public int UserId { get; set; }
 
-        [ScriptIgnore]
+        //[ScriptIgnore]
         public virtual News News { get; set; }
-        [ScriptIgnore]
+        //[ScriptIgnore]
         public virtual User Author { get; set; }
     }
 }

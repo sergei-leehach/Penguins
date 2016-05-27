@@ -1,0 +1,35 @@
+﻿@model SiteDevelopment.Models.User
+
+@{
+    ViewBag.Title = "Edit Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Edit", "User", FormMethod.Post))
+{
+    <div>
+        <div>@Html.LabelFor(x => x.FirstName)</div>
+        <div>@Html.EditorFor(x => x.FirstName)</div>
+
+        <div>@Html.LabelFor(x => x.Surname)</div>
+        <div>@Html.EditorFor(x => x.Surname)</div>
+
+        <div>@Html.LabelFor(x => x.Nickname)</div>
+        <div>@Html.EditorFor(x => x.Nickname)</div>
+
+        <div>@Html.LabelFor(x => x.Email)</div>
+        <div>@Html.EditorFor(x => x.Email)</div>
+
+        <div>@Html.LabelFor(x => x.Password)</div>
+        <div>@Html.EditorFor(x => x.Password)</div>
+
+        <div>@Html.LabelFor(x => x.City)</div>
+        <div>@Html.EditorFor(x => x.City)</div>
+
+        <div>@Html.LabelFor(x => x.DateOfBirth)</div>
+        <div>@Html.EditorFor(x => x.DateOfBirth)</div>
+
+        <div>@Html.LabelFor(x => x.DateOfRegistration)</div>
+        <div>@Html.EditorFor(x => x.DateOfRegistration)</div>
+    </div>
+}

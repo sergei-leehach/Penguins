@@ -24,7 +24,7 @@ namespace SiteDevelopment
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js", "~/Scripts/generator-functions.js", "~/Scripts/news-functions.js", "~/Scripts/chosen.jquery.min.js"));
+                      "~/Scripts/respond.js", "~/Scripts/generator-functions.js", "~/Scripts/news-functions.js", "~/Scripts/user-functions.js", "~/Scripts/chosen.jquery.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/datepicker").Include(
           "~/Scripts/bootstrap-datetimepicker.min.js"));

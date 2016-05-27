@@ -7,13 +7,13 @@ namespace SiteDevelopment.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Bundle : IMigrationMetadata
+    public sealed partial class NewInitWithTeams : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Bundle));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(NewInitWithTeams));
         
         string IMigrationMetadata.Id
         {
-            get { return "201604081442530_Bundle"; }
+            get { return "201605241558276_NewInitWithTeams"; }
         }
         
         string IMigrationMetadata.Source

@@ -11,9 +11,10 @@ using SiteDevelopment.Repository;
 
 namespace SiteDevelopment.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class MatchesController : Controller
     {
-        SiteRepository _db = new SiteRepository();
+        TeamsRepository _db = new TeamsRepository();
 
         // GET: Matches
         public ActionResult Index()
@@ -24,7 +25,7 @@ namespace SiteDevelopment.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(Matches match)
+        public ActionResult Index(Match match)
         {
             //match.Result = (TypeOfResult) Enum.Parse(typeof (TypeOfResult), result); [ModelBinder(typeof(MatchModelBinder))] 
             _db.NhlTableGeneration(match);

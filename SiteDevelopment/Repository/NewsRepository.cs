@@ -9,11 +9,11 @@ namespace SiteDevelopment.Repository
 {
     public class NewsRepository : IDisposable
     {
-        private NewsContext _db;
+        private SiteContext _db;
 
         public NewsRepository()
         {
-            _db = new NewsContext();
+            _db = new SiteContext();
         }
 
         public List<News> GetAllNews()
@@ -51,9 +51,9 @@ namespace SiteDevelopment.Repository
             return coll;
         }
 
-        public List<User> GetAuthor()
+        public User GetAuthor()
         {
-            var author = (from user in _db.Users where user.UserId == 1 select user).ToList();
+            var author = (from user in _db.Users where user.UserId == 1 select user).SingleOrDefault();
             return author;
         }
 

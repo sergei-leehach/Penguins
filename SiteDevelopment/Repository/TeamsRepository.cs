@@ -6,13 +6,13 @@ using SiteDevelopment.Models;
 
 namespace SiteDevelopment.Repository
 {
-    public partial class SiteRepository : IDisposable
+    public partial class TeamsRepository : IDisposable
     {
-        private SiteEntities _db;
+        private SiteContext _db;
 
-        public SiteRepository()
+        public TeamsRepository()
         {
-            _db = new SiteEntities();
+            _db = new SiteContext();
         }
 
         public void Dispose()
@@ -20,7 +20,7 @@ namespace SiteDevelopment.Repository
             _db.Dispose();
         }
 
-        private Seasons GetCurrentSeason()
+        private Season GetCurrentSeason()
         {
             var season = (from s in _db.Seasons where s.IsCurrent == true select s).ToList();
 
@@ -39,7 +39,7 @@ namespace SiteDevelopment.Repository
             foreach(var team in _db.Teams)
             {
                 Standings s = new Standings();
-                s.Seasons = currentSeason;
+                s.Season = currentSeason;
                 s.Team = team;
 
                 _db.Standings.Add(s);
@@ -69,21 +69,21 @@ namespace SiteDevelopment.Repository
         public IOrderedEnumerable<KeyValuePair<int, string>> GetTeams()
         {
             var collection = _db.Teams;
-            var y = collection.ToDictionary(item => item.TeamID, item => item.Name);
+            var y = collection.ToDictionary(item => item.TeamId, item => item.Name);
             var s = y.OrderBy(x => x.Value);
 
             return s;
         }
 
-        public void NhlTableGeneration(Matches match)
+        public void NhlTableGeneration(Match match)
         {
             _db.Matches.Add(match);
 
-            match.AwayTeam = _db.Teams.Find(match.AwayTeamID);
-            match.HomeTeam = _db.Teams.Find(match.HomeTeamID);
+            match.AwayTeam = _db.Teams.Find(match.AwayTeamId);
+            match.HomeTeam = _db.Teams.Find(match.HomeTeamId);
 
-            Teams winningTeam;
-            Teams losingTeam;
+            Team winningTeam;
+            Team losingTeam;
 
             int winnersGoals;
             int losersGoals;
@@ -107,8 +107,8 @@ namespace SiteDevelopment.Repository
             }
             var currentSeason = GetCurrentSeason();
 
-            Standings winStat = (from x in winningTeam.Standings where x.Seasons == currentSeason select x).LastOrDefault();
-            Standings loseStat = (from x in losingTeam.Standings where x.Seasons == currentSeason select x).LastOrDefault();
+            Standings winStat = (from x in winningTeam.Standings where x.Season == currentSeason select x).LastOrDefault();
+            Standings loseStat = (from x in losingTeam.Standings where x.Season == currentSeason select x).LastOrDefault();
 
             winStat.GamesPlayed += 1;
             loseStat.GamesPlayed += 1;
@@ -129,7 +129,7 @@ namespace SiteDevelopment.Repository
             _db.SaveChanges();
         }
 
-        private void FulltimeCounter(Matches match, Standings winner, Standings loser, int winnerGoals, int loserGoals)
+        private void FulltimeCounter(Match match, Standings winner, Standings loser, int winnerGoals, int loserGoals)
         {
             AwayHomeResult(match, winner, loser);
 
@@ -153,7 +153,7 @@ namespace SiteDevelopment.Repository
             StreakCounter(loser);
         }
 
-        private void OvertimeCounter(Matches match, Standings winner, Standings loser, int winnerGoals, int loserGoals)
+        private void OvertimeCounter(Match match, Standings winner, Standings loser, int winnerGoals, int loserGoals)
         {
             AwayHomeResultOT(match, winner, loser);
 
@@ -178,7 +178,7 @@ namespace SiteDevelopment.Repository
             StreakCounter(loser);
         }
 
-        private void ShootoutCounter(Matches match, Standings winner, Standings loser, int winnerGoals, int loserGoals)
+        private void ShootoutCounter(Match match, Standings winner, Standings loser, int winnerGoals, int loserGoals)
         {
             AwayHomeResultOT(match, winner, loser);
 
@@ -204,7 +204,7 @@ namespace SiteDevelopment.Repository
             StreakCounter(loser);
         }
 
-        private void AwayHomeResult(Matches match, Standings winner, Standings loser)
+        private void AwayHomeResult(Match match, Standings winner, Standings loser)
         {
             if (winner.Team.Name == match.AwayTeam.Name)
             {
@@ -218,7 +218,7 @@ namespace SiteDevelopment.Repository
             }
         }
 
-        private void AwayHomeResultOT(Matches match, Standings winner, Standings loser)
+        private void AwayHomeResultOT(Match match, Standings winner, Standings loser)
         {
             if (winner.Team.Name == match.AwayTeam.Name)
             {
@@ -233,7 +233,7 @@ namespace SiteDevelopment.Repository
         }
 
         [Obsolete]
-        private void AwayHomeWinner(Matches match, Standings winner)
+        private void AwayHomeWinner(Match match, Standings winner)
         {
             if (winner.Team.Name == match.AwayTeam.Name)
             {
@@ -246,7 +246,7 @@ namespace SiteDevelopment.Repository
         }
 
         [Obsolete]
-        private void AwayHomeLoser(Matches match, Standings loser)
+        private void AwayHomeLoser(Match match, Standings loser)
         {
             if (match.Result == TypeOfResult.FT)
             {

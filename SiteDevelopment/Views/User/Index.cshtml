@@ -1,0 +1,48 @@
+﻿@model SiteDevelopment.Models.User
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div>
+        @Html.LabelFor(x => x.FirstName)
+        @Html.DisplayFor(x => x.FirstName)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Surname)
+        @Html.DisplayFor(x => x.Surname)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Nickname)
+        @Html.DisplayFor(x => x.Nickname)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Email)
+        @Html.DisplayFor(x => x.Email)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Password)
+        @Html.DisplayFor(x => x.Password)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.City)
+        @Html.DisplayFor(x => x.City)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.DateOfBirth)
+        @Html.DisplayFor(x => x.DateOfBirth)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.DateOfRegistration)
+        @Html.DisplayFor(x => x.DateOfRegistration)
+    </div>
+
+    <div>
+        @Html.LabelFor(x => x.Avatar)
+        @Html.DisplayFor(x => x.Avatar)
+    </div>
+
+    <div><a href="@Url.Action("Edit", "User", new { id = Model.UserId })"><div class="button">Edit Profile</div></a></div>
+</div>

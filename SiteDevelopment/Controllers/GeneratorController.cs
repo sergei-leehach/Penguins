@@ -9,8 +9,9 @@ using SiteDevelopment.Repository;
 
 namespace SiteDevelopment.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class GeneratorController : Controller
-    {
+    {       
         public ActionResult Index()
         {
             ViewBag.DropDown = DbQuery.DropDownListGeneration();

@@ -1,0 +1,40 @@
+﻿@model SiteDevelopment.Models.User
+
+@{
+    ViewBag.Title = "Log On";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Log On</h1>
+
+@using (Html.BeginForm("LogOn", "User", FormMethod.Post))
+{
+    <div>
+        <fieldset>
+            <legend>Account information</legend>
+
+            <span>Enter your e-mail and password. <a href="@Url.Action("Registration", "User")">Register</a> if you don't have an account</span>
+
+            <div>@Html.LabelFor(x => x.Email)</div>
+            <div>
+                @Html.EditorFor(x => x.Email, null, "email")
+                @Html.ValidationMessageFor(x => x.Email)
+            </div>
+
+            <div>@Html.LabelFor(x => x.Password)</div>
+            <div>
+                @Html.EditorFor(x => x.Password, null, "password")
+                @Html.ValidationMessageFor(x => x.Password)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.RememberMe)
+                @Html.CheckBoxFor(x => x.RememberMe)
+                @*<input type="checkbox" name="RememberMe"/>*@
+            </div>
+        </fieldset>
+    </div>
+    <div>
+        <input type="submit" value="Log On" />
+    </div>
+}
+

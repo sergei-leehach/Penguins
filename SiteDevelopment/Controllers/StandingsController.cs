@@ -14,9 +14,10 @@ namespace SiteDevelopment.Controllers
 {
     public class StandingsController : Controller
     {
-        SiteRepository _db = new SiteRepository();
+        TeamsRepository _db = new TeamsRepository();
 
         // GET: Standings
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var league = _db.GetLeague();

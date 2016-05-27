@@ -1,0 +1,49 @@
+﻿@model SiteDevelopment.Models.User
+
+@{
+    ViewBag.Title = "Registraion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Registration", "User", FormMethod.Post))
+{
+    <div>
+        <fieldset>
+            <legend>Registration</legend>
+
+            <div>
+                @Html.LabelFor(x => x.Nickname)
+            </div>
+            <div>
+                @Html.EditorFor(x => x.Nickname)
+                @Html.ValidationMessageFor(x => x.Nickname)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.Email)
+            </div>
+            <div>
+                @Html.EditorFor(x => x.Email)
+                @Html.ValidationMessageFor(x => x.Email)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.Password)
+            </div>
+            <div>
+                @Html.EditorFor(x => x.Password, null, "password", new { htmlAttributes = new { onkeyup = "Compare();" }})
+                @Html.ValidationMessageFor(x => x.Password)
+            </div>
+            <div>
+                <label>Confirm Password</label>
+            </div>
+            <div>
+                <input id="confirm" type="password" onkeyup="Compare();"/>
+                <span id="validation"></span>
+            </div>
+
+            <input type="submit" value="Register"/>
+        </fieldset>
+    </div>
+}
+
+
+
