@@ -23,18 +23,18 @@ namespace SiteDevelopment.Controllers
 
         // GET: User
         [Authorize]
-        public ActionResult Index(int userId)
+        public ActionResult Index(int id)
         {
-            var user = _db.GetUser(userId);
+            var user = _db.GetUser(id);
             return View(user);
         }
 
         //[Authorize]
-        public ActionResult Edit(int? userId)
+        public ActionResult Edit(int? id)
         {
-            if (userId.HasValue)
+            if (id.HasValue)
             {
-                var user = _db.GetUser(userId.Value);
+                var user = _db.GetUser(id.Value);
                 return View(user);
             }
             return RedirectToAction("Index", "News");

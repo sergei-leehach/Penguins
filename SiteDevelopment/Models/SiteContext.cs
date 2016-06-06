@@ -44,7 +44,7 @@ namespace SiteDevelopment.Models
         //}
     }
 
-    public class RoleInitializer : DropCreateDatabaseAlways<SiteContext>
+    public class RoleInitializer : CreateDatabaseIfNotExists<SiteContext>
     {
         protected override void Seed(SiteContext context)
         {
