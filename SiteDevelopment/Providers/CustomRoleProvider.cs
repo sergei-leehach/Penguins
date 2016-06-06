@@ -4,70 +4,70 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using SiteDevelopment.Models;
+using SiteDevelopment.Repository;
 
 namespace SiteDevelopment.Providers
 {
     public class CustomRoleProvider : RoleProvider
     {
+        private UserRepository _db;
+
+        public CustomRoleProvider()
+        {
+            _db = new UserRepository();
+        }
         public override string[] GetRolesForUser(string email)
         {
-            string[] role = new string[] {};
-            using (SiteContext _db = new SiteContext())
+            string[] role = new string[] { };
+
+            //try
+            //{
+            User user = _db.GetUser(email);
+
+            if (user != null)
             {
-                try
-                {
-                    User user = _db.Users.SingleOrDefault(x => x.Email == email);
+                Role useRole = _db.GetRole(user.RoleId);
 
-                    if (user != null)
-                    {
-                        Role useRole = _db.Roles.Find(user.RoleId);
-
-                        if (useRole != null)
-                        {
-                            role = new string[] {useRole.Name};
-                        }
-                    }
-                }
-                catch
+                if (useRole != null)
                 {
-                    role = new string[] {};
+                    role = new string[] { useRole.Name };
                 }
             }
+            //}
+            //catch
+            //{
+            //    role = new string[] {};
+            //}
             return role;
         }
 
         public override void CreateRole(string roleName)
         {
-            Role newRole = new Role() { Name = roleName };
-            SiteContext _db = new SiteContext();
-            _db.Roles.Add(newRole);
-            _db.SaveChanges();
+            Role newRole = new Role { Name = roleName };
+            _db.CreateRole(newRole);
         }
 
         public override bool IsUserInRole(string email, string roleName)
         {
             bool outputResult = false;
-            using (SiteContext _db = new SiteContext())
+            //try
+            //{
+            User user = _db.GetUser(email);
+
+            if (user != null)
             {
-                try
-                {
-                    User user = _db.Users.SingleOrDefault(x => x.Email == email);
+                Role userRole = _db.GetRole(user.RoleId);
 
-                    if (user != null)
-                    {
-                        Role userRole = _db.Roles.Find(user.RoleId);
-
-                        if (userRole != null && userRole.Name == roleName)
-                        {
-                            outputResult = true;
-                        }
-                    }
-                }
-                catch
+                if (userRole != null && userRole.Name == roleName)
                 {
-                    outputResult = false;
+                    outputResult = true;
                 }
             }
+            //}
+            //catch
+            //{
+            //    outputResult = false;
+            //}
             return outputResult;
         }
         public override string ApplicationName

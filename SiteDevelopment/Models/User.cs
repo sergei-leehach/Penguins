@@ -13,14 +13,12 @@ namespace SiteDevelopment.Models
     {
         [Key]
         public int UserId { get; set; }
-        public bool IsAdmin { get; set; }
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
-
         public string Surname { get; set; }
 
-        [Required(ErrorMessage = "The nickname is required!")]
+        //[Required(ErrorMessage = "The nickname is required!")]
         public string Nickname { get; set; }
 
         [Display(Name = "Email Address")]

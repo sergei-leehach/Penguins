@@ -7,13 +7,13 @@ namespace SiteDevelopment.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class NewInitWithTeams : IMigrationMetadata
+    public sealed partial class LengthAttribute : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(NewInitWithTeams));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(LengthAttribute));
         
         string IMigrationMetadata.Id
         {
-            get { return "201605241558276_NewInitWithTeams"; }
+            get { return "201606021324491_LengthAttribute"; }
         }
         
         string IMigrationMetadata.Source

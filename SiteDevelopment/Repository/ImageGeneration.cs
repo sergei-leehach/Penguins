@@ -30,7 +30,7 @@ namespace SiteDevelopment.Repository
             Graphics g = Graphics.FromImage(imageTemplate);
 
             g.SmoothingMode = SmoothingMode.HighQuality;
-            GraphicsExtention.DrawScaledArImage(g, background, new Rectangle(0, 0, 1280, 960));
+            g.DrawScaledArImage(background, new Rectangle(0, 0, 1280, 960));
             //g.DrawImage(background, 0, 0);
 
             Image home = Image.FromFile(data.HomeTeamLogo);
@@ -67,11 +67,8 @@ namespace SiteDevelopment.Repository
                         g.DrawString("(SO)", addFont, Brushes.Black, new Point(centerPoint, 550), format);
                         break;
                 }
-            }
-            
-
+            }          
             string link;
-
             
             string nameOfFile =
                 $"{data.AwayTeamShortName}_{data.HomeTeamShortName}_{data.DateOfAMatch.ToString("dd_MM")}.png";

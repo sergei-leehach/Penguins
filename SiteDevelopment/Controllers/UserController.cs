@@ -12,7 +12,14 @@ namespace SiteDevelopment.Controllers
 {
     public class UserController : Controller
     {
-        private UserRepository _db = new UserRepository();
+        private UserRepository _db;
+        private CustomMembershipProvider _provider;
+
+        public UserController()
+        {
+            _db = new UserRepository();
+            _provider = new CustomMembershipProvider();
+        }
 
         // GET: User
         [Authorize]
@@ -22,11 +29,15 @@ namespace SiteDevelopment.Controllers
             return View(user);
         }
 
-        [Authorize]
-        public ActionResult Edit(int userId)
+        //[Authorize]
+        public ActionResult Edit(int? userId)
         {
-            var user = _db.GetUser(userId);
-            return View(user);
+            if (userId.HasValue)
+            {
+                var user = _db.GetUser(userId.Value);
+                return View(user);
+            }
+            return RedirectToAction("Index", "News");
         }
 
         [Authorize]
@@ -90,13 +101,15 @@ namespace SiteDevelopment.Controllers
         {
             if (ModelState.IsValid)
             {
-                MembershipUser membershipUser = ((CustomMembershipProvider) Membership.Provider).CreateUser(user.Nickname, user.Email,
-                    user.Password);
+                MembershipUser membershipUser = _provider.CreateUser(user.Nickname, user.Email,
+                   user.Password);
 
                 if (membershipUser != null)
                 {
-                    FormsAuthentication.SetAuthCookie(user.Email, false);
-                    return RedirectToAction("Edit", user.UserId);
+                    User u = _db.GetUser(user.Email);
+
+                    FormsAuthentication.SetAuthCookie(u.Email, false);
+                    return RedirectToAction("Edit", new { id = u.UserId });
                 }
                 else
                 {

@@ -3,7 +3,7 @@ namespace SiteDevelopment.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class NewInitWithTeams : DbMigration
+    public partial class NewNewInit : DbMigration
     {
         public override void Up()
         {
@@ -44,12 +44,11 @@ namespace SiteDevelopment.Migrations
                 c => new
                     {
                         UserId = c.Int(nullable: false, identity: true),
-                        IsAdmin = c.Boolean(nullable: false),
                         FirstName = c.String(),
                         Surname = c.String(),
-                        Nickname = c.String(nullable: false),
+                        Nickname = c.String(),
                         Email = c.String(nullable: false),
-                        Password = c.String(nullable: false, maxLength: 100),
+                        Password = c.String(nullable: false),
                         RememberMe = c.Boolean(nullable: false),
                         Avatar = c.String(),
                         City = c.String(),

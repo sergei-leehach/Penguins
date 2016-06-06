@@ -14,5 +14,9 @@
         validation.text("Passwords don't match!").css("color", "red");
         input1.css("border-color", "red");
         input2.css("border-color", "red");
+
+        //$("#form").submit(function(event) {
+        //    event.preventDefault();
+        //});
     }
 }

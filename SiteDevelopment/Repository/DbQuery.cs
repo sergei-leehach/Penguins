@@ -39,7 +39,7 @@ namespace SiteDevelopment.Repository
         {
             _connection = new SqlConnection(ConnectionString);
 
-            _sqlQuery = $"Select City_Area, Arena from Teams where Name = '{s}'";
+            _sqlQuery = $"Select CityArea, Arena from Teams where Name = '{s}'";
             _command = new SqlCommand(_sqlQuery, _connection);
             _connection.Open();
 
@@ -48,7 +48,7 @@ namespace SiteDevelopment.Repository
 
             while (_reader.Read())
             {
-                result[0] = _reader["City_Area"].ToString();
+                result[0] = _reader["CityArea"].ToString();
                 result[1] = _reader["Arena"].ToString();
             }              
 
