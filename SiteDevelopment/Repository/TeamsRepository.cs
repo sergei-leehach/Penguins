@@ -1,86 +1,208 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc.Html;
 using SiteDevelopment.Models;
 
 namespace SiteDevelopment.Repository
 {
-    public partial class TeamsRepository : IDisposable
+    public class TeamsRepository : BaseRepository
     {
-        private SiteContext _db;
-
-        public TeamsRepository()
+        public TeamsRepository(string connectionString) : base(connectionString)
         {
-            _db = new SiteContext();
+        }
+        
+        public List<Team> GetTeams()
+        {
+            var teams = new List<Team>();
+
+            var sqlQuery = "Select * from Teams;";
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
+
+            command.Connection.Open();
+            var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var team = new Team(reader);
+                teams.Add(team);
+            }
+            command.Connection.Close();
+            return teams;
         }
 
-        public void Dispose()
+        public Team GetTeamById(int id)
         {
-            _db.Dispose();
+            //Select * from Teams join Standings on Standings.TeamId = Teams.TeamId join Matches on Matches.SeasonId = Standings.SeasonId where Teams.TeamId  = 8 AND (Matches.HomeTeamId = 8 OR Matches.AwayTeamId = 8)
+            var team = new Team();
+            var s = new Standings(); 
+            var standings = new List<Standings>();
+            var matches = new List<Match>();
+            var sqlQuery = $"Select * from Teams left join Standings on Standings.TeamId = Teams.TeamId left join Matches on Matches.SeasonId = Standings.SeasonId left join Seasons on Seasons.SeasonId = Standings.SeasonId where Teams.TeamId  = {id}";
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
+            command.Connection.Open();
+            var reader = command.ExecuteReader();            
+
+            while (reader.Read())
+            {
+                if (team.TeamId == 0)
+                {
+                    team = new Team(reader);
+                }
+                if (s.StandingsId != Convert.ToInt32(reader["StandingsId"]))
+                {
+                    s = new Standings(reader) { Season = new Season(reader) };
+                    standings.Add(s);
+                }                           
+                var match = new Match(reader);
+                matches.Add(match);
+            }
+            command.Connection.Close();
+            team.Standings = standings;
+            team.MatchesHome = matches.Where(x => x.HomeTeamId == team.TeamId).ToList();
+            team.MatchesAway = matches.Where(x => x.AwayTeamId == team.TeamId).ToList();
+            return team;
         }
 
         private Season GetCurrentSeason()
+        {                                   
+            var sqlQuery = "Select * from Seasons where IsCurrent = 1;";
+            var season = GetSeason(sqlQuery);
+            return season;
+        }
+
+        private Season GetSeasonById(int id)
         {
-            var season = (from s in _db.Seasons where s.IsCurrent == true select s).ToList();
+            var sqlQuery = $"Select * from Seasons where SeasonId = {id};";
+            var season = GetSeason(sqlQuery);
+            return season;
+        }
 
-            if (season.Any())
+        private Season GetSeason(string sqlQuery)
+        {
+            var season = new Season();
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
+            command.Connection.Open();
+            var reader = command.ExecuteReader();
+
+            while (reader.Read())
             {
-                return season.LastOrDefault();
+                season = new Season(reader);
             }
+            command.Connection.Close();
+            return season;
+        }
 
-            return null;
+        private string StandingsQuery(Standings standings)
+        {
+            var sqlQuery =
+                $"Update Standings Set GamesPlayed = {standings.GamesPlayed}, Wins = {standings.Wins}, Losses = {standings.Losses}, OT = {standings.OT}, Points = {standings.Points}, ROW = {standings.ROW}, GoalsFor = {standings.GoalsFor}, GoalsAgainst = {standings.GoalsAgainst}, GoalDifferential = {standings.GoalDifferential}, HomeWins = {standings.HomeWins}, HomeLosses = {standings.HomeLosses}, HomeOT = {standings.HomeOT}, AwayWins = {standings.AwayWins}, AwayLosses = {standings.AwayLosses}, AwayOT = {standings.AwayOT}, ShootoutWins = {standings.ShootoutWins}, ShootoutLosses = {standings.ShootoutLosses}, LastWins = {standings.LastWins}, LastLosses = {standings.LastLosses}, LastOT = {standings.LastOT}, Streak = {standings.Streak}, TypeOfResult = '{standings.TypeOfResult}' where StandingsId = {standings.StandingsId};";
+
+            return sqlQuery;
+        }
+
+        //var sqlQuery =
+        //        $"Insert into Standings (TeamId, SeasonId, GamesPlayed, Wins, Losses, OT, Points, ROW, GoalsFor, GoalsAgainst, GoalDifferential, HomeWins, HomeLosses, HomeOT, AwayWins, AwayLosses, AwayOT, ShootoutWins, ShootoutLosses, LastWins, LastLosses, LastOT, Streak) Values ({standings.TeamId}, {standings.SeasonId}, {standings.GamesPlayed}, {standings.Wins}, {standings.Losses}, {standings.OT}, {standings.Points}, {standings.ROW}, {standings.GoalsFor}, {standings.GoalsAgainst}, {standings.GoalDifferential}, {standings.HomeWins}, {standings.HomeLosses}, {standings.HomeOT}, {standings.AwayWins}, {standings.AwayLosses}, {standings.AwayOT}, {standings.ShootoutWins}, {standings.ShootoutLosses}, {standings.LastWins}, {standings.LastLosses}, {standings.LastOT}, {standings.Streak})";
+        public List<Standings> GetStandingsByTeamId(int id)
+        {
+            var standings = new List<Standings>();
+            var sqlQuery = $"Select * from Standings where TeamId = {id};";
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
+            command.Connection.Open();
+            var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var s = new Standings(reader);
+                standings.Add(s);
+            }
+            command.Connection.Close();
+            return standings;
         }
 
         public void CreateStandings()
         {
             var currentSeason = GetCurrentSeason();
+            var teams = GetTeams();
+            var sqlQuery = string.Empty;
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
 
-            foreach(var team in _db.Teams)
+            foreach (var team in teams)
             {
-                Standings s = new Standings();
-                s.Season = currentSeason;
-                s.Team = team;
-
-                _db.Standings.Add(s);
+                command.CommandText = $"Insert into Standings (TeamId, SeasonId) Values ('{team.TeamId}', '{currentSeason.SeasonId}');";               
+                DbQuery.ExecuteCommand(command);
             }
-
-            _db.SaveChanges();
         }
 
-        public IEnumerable<Standings> GetDivision()
+        public List<Match> GetMatches(string query)
         {
-            var currentSeason = GetCurrentSeason();
+            var matches = new List<Match>();
+            var sqlQuery = query;
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
 
-            var divisions = from s in _db.Standings orderby s.Team.Division /*orderby s.Points*/ select s;
-            
-            return divisions.ToList();
+            command.Connection.Open();
+            var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var match = new Match
+                {
+                    MatchId = Convert.ToInt32(reader["MatchId"]),
+                    HomeTeamId = Convert.ToInt32(reader["HomeTeamId"]),
+                    AwayTeamId = Convert.ToInt32(reader["AwayTeamId"]),
+                    HomeTeamScore = Convert.ToInt32(reader["HomeTeamScore"]),
+                    AwayTeamScore = Convert.ToInt32(reader["AwayTeamScore"]),
+                    Result = (TypeOfResult) reader["Result"],
+                    Date = Convert.ToDateTime(reader["Date"])
+                };
+                matches.Add(match);
+            }
+            command.Connection.Close();
+            return matches;
         } 
-             
-        public IEnumerable<Standings> GetLeague()
+
+        
+
+        //public IEnumerable<Standings> GetDivision()
+        //{
+        //    var currentSeason = GetCurrentSeason();
+
+        //    var divisions = from s in _db.Standings orderby s.Team.Division /*orderby s.Points*/ select s;
+
+        //    return divisions.ToList();
+        //}
+
+        public List<Standings> GetLeague()
         {
+            var league = new List<Standings>();
             var currentSeason = GetCurrentSeason();
+            var sqlQuery = $"Select * from Standings join Teams on Teams.TeamId = Standings.TeamId where SeasonId = {currentSeason.SeasonId};";
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
 
-            var league = from s in _db.Standings /*where s.Seasons == currentSeason*/ orderby s.Points descending select s;
+            command.Connection.Open();
+            var reader = command.ExecuteReader();
 
+            while (reader.Read())
+            {
+                var team = new Team(reader);
+                var standings = new Standings(reader) { Team = team };
+                league.Add(standings);
+            }
+            //var league = from s in _db.Standings /*where s.Seasons == currentSeason*/ orderby s.Points descending select s;
             return league.ToList();
-        }
-
-        public IOrderedEnumerable<KeyValuePair<int, string>> GetTeams()
-        {
-            var collection = _db.Teams;
-            var y = collection.ToDictionary(item => item.TeamId, item => item.Name);
-            var s = y.OrderBy(x => x.Value);
-
-            return s;
         }
 
         public void NhlTableGeneration(Match match)
         {
-            _db.Matches.Add(match);
+            match.AwayTeam = GetTeamById(match.AwayTeamId);
+            match.HomeTeam = GetTeamById(match.HomeTeamId);
 
-            match.AwayTeam = _db.Teams.Find(match.AwayTeamId);
-            match.HomeTeam = _db.Teams.Find(match.HomeTeamId);
+            match.SeasonId = GetCurrentSeason().SeasonId;
+            var sqlQuery = $"Insert into Matches (SeasonId, HomeTeamId, AwayTeamId, HomeTeamScore, AwayTeamScore, Result, Date) Values ({match.SeasonId}, {match.HomeTeamId}, {match.AwayTeamId}, {match.HomeTeamScore}, {match.AwayTeamScore}, {(int)match.Result}, '{match.Date}')";
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
+            DbQuery.ExecuteCommand(command);                  
 
             Team winningTeam;
             Team losingTeam;
@@ -89,27 +211,39 @@ namespace SiteDevelopment.Repository
             int losersGoals;
 
             if (match.AwayTeamScore > match.HomeTeamScore)
-            {
+            {               
                 winningTeam = match.AwayTeam;
+                winningTeam.MatchesAway.Add(match);
                 winnersGoals = match.AwayTeamScore;
 
-
                 losingTeam = match.HomeTeam;
+                losingTeam.MatchesHome.Add(match);
                 losersGoals = match.HomeTeamScore;
             }
             else
-            {
+            {              
                 winningTeam = match.HomeTeam;
+                winningTeam.MatchesHome.Add(match);
                 winnersGoals = match.HomeTeamScore;
 
                 losingTeam = match.AwayTeam;
+                losingTeam.MatchesAway.Add(match);
                 losersGoals = match.AwayTeamScore;
             }
+
             var currentSeason = GetCurrentSeason();
+            //if (currentSeason.Standings.Count == 0)
+            //{
+            //    CreateStandings();
+            //}
 
-            Standings winStat = (from x in winningTeam.Standings where x.Season == currentSeason select x).LastOrDefault();
-            Standings loseStat = (from x in losingTeam.Standings where x.Season == currentSeason select x).LastOrDefault();
+            var winStat = winningTeam.Standings.SingleOrDefault(x => x.Season.SeasonId == currentSeason.SeasonId);
+            var loseStat = losingTeam.Standings.SingleOrDefault(x => x.Season.SeasonId == currentSeason.SeasonId);
+            //var winStat = (from s in GetStandingsByTeamId(winningTeam.TeamId) where s.Season.IsCurrent == true select s).FirstOrDefault();
+            //var loseStat = (from s in GetStandingsByTeamId(losingTeam.TeamId) where s.Season.IsCurrent == true select s).FirstOrDefault();
 
+            winStat.Team = winningTeam;
+            loseStat.Team = losingTeam;
             winStat.GamesPlayed += 1;
             loseStat.GamesPlayed += 1;
 
@@ -125,8 +259,11 @@ namespace SiteDevelopment.Repository
                     ShootoutCounter(match, winStat, loseStat, winnersGoals, losersGoals);
                     break;
             }
-
-            _db.SaveChanges();
+            
+            command.CommandText = StandingsQuery(winStat);
+            DbQuery.ExecuteCommand(command);
+            command.CommandText = StandingsQuery(loseStat);
+            DbQuery.ExecuteCommand(command);
         }
 
         private void FulltimeCounter(Match match, Standings winner, Standings loser, int winnerGoals, int loserGoals)
@@ -269,7 +406,7 @@ namespace SiteDevelopment.Repository
                 {
                     loser.HomeOT += 1;
                 }
-            }            
+            }
         }
 
         private void LastTenGamesCounter(Standings someTeam)
@@ -323,6 +460,19 @@ namespace SiteDevelopment.Repository
             {
                 someTeam.Streak += 1;
             }
-        }
+
+            switch (games[0])
+            {
+                case Streak.Win:
+                    someTeam.TypeOfResult = "Win";
+                    break;
+                case Streak.Loss:
+                    someTeam.TypeOfResult = "Loss";
+                    break;
+                case Streak.OT:
+                    someTeam.TypeOfResult = "OT";
+                    break;             
+            }
+        }      
     }
 }

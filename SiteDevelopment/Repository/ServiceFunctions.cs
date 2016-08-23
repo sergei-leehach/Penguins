@@ -37,7 +37,6 @@ namespace SiteDevelopment.Repository
                         throw new ArgumentOutOfRangeException();
                 }
             }
-
             return result;
         }
     }

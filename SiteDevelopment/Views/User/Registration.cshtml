@@ -5,9 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h1>Create an account</h1>
+
 @using (Html.BeginForm("Registration", "User", FormMethod.Post, new { id = "form" }))
 {
-    <div>
+    <div class="log-reg">
         <fieldset>
             <legend>Registration</legend>
 
@@ -40,7 +42,9 @@
                 <span id="validation"></span>
             </div>
 
-            <input type="submit" value="Register"/>
+            <div>
+                <input type="submit" value="Register"/>
+            </div>
         </fieldset>
     </div>
 }

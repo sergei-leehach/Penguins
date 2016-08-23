@@ -1,21 +1,21 @@
-﻿@model SiteDevelopment.Models.Matches
+﻿@model SiteDevelopment.Models.Match
 
 @{
     ViewBag.Title = "Index";
 }
 
-<form action="/Matches" method="POST" class="form-horizontal">
+<form action="/Match" method="POST" class="form-horizontal">
     <div class="container substrate">
 
         <div class="form-group">
             <label class="col-lg-5">Гостевая команда</label>
             <div class="col-lg-7">
-                <select class="team-dropdown form-control" name="AwayTeamID">
+                <select class="team-dropdown form-control" name="AwayTeamId">
                     <option class="team-dropdown" disabled selected>Выберите команду...</option>
                     @{
                         foreach (var item in ViewBag.DropDown)
                         {
-                            <option class="team-dropdown-clean" value="@item.Key">@item.Value</option>
+                            <option class="team-dropdown-clean" value="@item.TeamId">@item.Name</option>
                         }
                     }
                 </select>
@@ -25,12 +25,12 @@
         <div class="form-group">
             <label class="col-lg-5">Домашняя команда</label>
             <div class="col-lg-7">
-                <select class="team-dropdown form-control" name="HomeTeamID">
+                <select class="team-dropdown form-control" name="HomeTeamId">
                     <option class="team-dropdown" disabled selected>Выберите команду...</option>
                     @{
                         foreach (var item in ViewBag.DropDown)
                         {
-                            <option class="team-dropdown-clean" value="@item.Key">@item.Value</option>
+                            <option class="team-dropdown-clean" value="@item.TeamId">@item.Name</option>
                         }
                     }
                 </select>

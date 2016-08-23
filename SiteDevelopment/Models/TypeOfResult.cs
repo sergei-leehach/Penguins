@@ -8,8 +8,8 @@ namespace SiteDevelopment.Models
 {
     public enum TypeOfResult
     {
-        FT,
-        OT,
-        SO, 
+        FT = 0,
+        OT = 1,
+        SO = 2, 
     }
 }

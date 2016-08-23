@@ -2,6 +2,7 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Common;
 using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Web;
@@ -46,13 +47,29 @@ namespace SiteDevelopment.Models
         public int? RoleId { get; set; }
         public Role Role { get; set; }
 
-        public virtual ICollection<News> News { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
+        public ICollection<News> News { get; set; }
+        public ICollection<Comment> Comments { get; set; }
 
         public User()
         {
             News = new HashSet<News>();
             Comments = new HashSet<Comment>();
         }
+
+        public User(DbDataReader reader)
+        {
+            UserId = Convert.ToInt32(reader["UserId"]);
+            FirstName = reader["Firstname"].ToString();
+            Surname = reader["Surname"].ToString();
+            Nickname = reader["Nickname"].ToString();
+            Email = reader["Email"].ToString();
+            Password = reader["Password"].ToString();
+            RememberMe = Convert.ToBoolean(reader["RememberMe"]);
+            Avatar = reader["Avatar"].ToString();
+            City = reader["City"].ToString();
+            DateOfBirth = Convert.ToDateTime(reader["DateOfBirth"]);
+            DateOfRegistration = Convert.ToDateTime(reader["DateOfRegistration"]);
+            RoleId = Convert.ToInt32(reader["RoleId"]);
+        }      
     }   
 }

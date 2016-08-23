@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -14,17 +13,16 @@ namespace SiteDevelopment.Controllers
 {
     public class StandingsController : Controller
     {
-        TeamsRepository _db = new TeamsRepository();
+        TeamsRepository _db = new TeamsRepository(DbQuery.ConnectionString);
 
         // GET: Standings
         [AllowAnonymous]
         public ActionResult Index()
         {
             var league = _db.GetLeague();
-            if (league.Count() == 0)
+            if (!league.Any())
             {
                 _db.CreateStandings();
-                //league = _db.GetLeague();
             }
             return View(league);
         }

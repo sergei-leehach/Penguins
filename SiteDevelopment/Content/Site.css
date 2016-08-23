@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    /*padding-top: 50px;*/
     padding-bottom: 20px;
 }
 
@@ -21,4 +21,210 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 5px 25px;
+    font-weight: bold;
+}
+
+a, a:link, a:visited, a:active, a:hover {
+    text-decoration: none;
+}
+
+img {
+    border: none;
+}
+
+table {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+form {
+    margin: 0;
+    padding: 0;
+    display: inline;
+}
+
+/* --=====-- Own classes --=====-- */
+
+.main {
+    background-color: black;
+    margin: 0;
+}
+
+.header-img-style {
+    width: inherit;
+    margin: auto;
+    width: 990px;
+}
+
+.body-style {
+    width: 990px;
+    /*outline: 5px #fdbb30 solid;*/
+    margin: auto;
+    margin-top: 0;
+    padding-top: 100px;
+    background-color: white;
+    border-left: 5px #fdbb30 solid;
+    border-right: 5px #fdbb30 solid;
+    border-bottom: 5px #fdbb30 solid;
+}
+
+.content {
+    width: 660px;
+}
+
+.column {
+    width: 330px;
+}
+
+.navigation {
+    width: 100%;
+    height: 50px;
+    background-color: #fdbb30;
+    position: fixed;
+}
+
+.wrapper {
+    width: 990px;
+    height: 50px;
+    margin: auto;
+}
+
+.left-side {
+    display: inline-block;
+    width: 55px;
+    height: 50px;  
+}
+
+.right-side {
+    display: inline-block;
+    width: 930px;
+    height: 50px;
+    float: right;
+}
+
+.nav-align {
+    width: inherit;
+    height: 50px;
+    float: right;
+    padding: 0;
+    margin: 0;
+}
+
+.main-page-link {
+    width: 55px;
+    height: 50px;
+    background-image: url(/Images/Site/pit-logo.png);
+    background-size: 55px 50px;
+}
+
+
+li {
+    display: inline-block;
+    margin: 0 -1.5px;
+    padding-top: 15px;
+}
+
+    li a {
+        color: black;
+        text-decoration: none;
+        padding: 15.5px 20px 10.5px;
+        position: relative;
+    }
+
+        li a:visited {
+            color: black;
+        }
+
+        li a:hover {
+            background-color: black;
+            color: white;
+            padding: 15.5px 20px;
+            border: none;
+        }
+
+        li a:active {
+            background-color: black;
+            color: #fdbb30;
+            padding: 15.5px 20px 10.5px;
+            border-bottom: 5px black solid;
+        }
+
+.active a {
+    border-bottom: 5px black solid;
+}
+
+input {
+    height: 30px;
+    padding-left: 7px;
+    font-size: larger;
+    border: 1px lightgray solid;
+}
+
+    /*input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    background-color: white;
+    background-image: none;
+    color: rgb(0, 0, 0);
+}*/
+
+    input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px white inset;
+    }
+
+    input:focus {
+        outline-color: #fdbb30;
+    }
+
+    input[type="submit"] {
+        border: 1px black groove;
+        outline: none;
+        background-color: #fdbb30;
+        color: black;
+        width: 100px;
+        height: 45px;
+        font-family: "Roboto Condensed";
+        font-size: 20px;
+        font-weight: bold;
+        float: inherit;
+    }
+
+    input[type="submit"]:hover {
+        background-color: black;
+        color: white;
+    }
+
+    input[type="submit"]:active {
+        background-color: black;
+        color: #fdbb30;
+    }
+
+    input[type="checkbox"] {
+        /*-webkit-appearance: menulist;*/
+        width: 20px;
+        height: 20px;
+        border: 1px lightgray groove;
+        margin: 0;
+        position: relative;
+        top: 3px;
+    }
+
+fieldset {
+    margin: 5px 15px;
+    border-color: lightgray;
+    background-color: #f7f7f7;
+}
+
+footer {
+    padding: 5px 25px;
 }

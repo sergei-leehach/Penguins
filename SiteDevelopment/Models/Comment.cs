@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Common;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -22,8 +23,23 @@ namespace SiteDevelopment.Models
         public int UserId { get; set; }
 
         //[ScriptIgnore]
-        public virtual News News { get; set; }
+        public News News { get; set; }
         //[ScriptIgnore]
-        public virtual User Author { get; set; }
+        public User Author { get; set; }
+
+        public Comment()
+        {          
+        }
+
+        public Comment(DbDataReader reader)
+        {
+            CommentId = Convert.ToInt32(reader["CommentId"]);
+            Text = reader["Text"].ToString();
+            Like = Convert.ToInt32(reader["Like"]);
+            Dislike = Convert.ToInt32(reader["Dislike"]);
+            PublicationTime = Convert.ToDateTime(reader["PublicationTime"]);
+            NewsId = Convert.ToInt32(reader["NewsId"]);
+            UserId = Convert.ToInt32(reader["UserId"]);
+        }
     }
 }

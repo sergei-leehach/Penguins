@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -17,7 +16,7 @@ namespace SiteDevelopment.Providers
 
         public CustomMembershipProvider()
         {
-            _db = new UserRepository();
+            _db = new UserRepository(DbQuery.ConnectionString);
         }
 
         public override bool ValidateUser(string email, string password)
@@ -25,7 +24,7 @@ namespace SiteDevelopment.Providers
             bool isValid = false;
             //try
             //{
-                User user = _db.GetUser(email);
+                User user = _db.GetUserByEmail(email);
 
                 if (user != null && _db.CheckPassword(user.UserId, password))
                 {
@@ -63,7 +62,7 @@ namespace SiteDevelopment.Providers
         {
             //try
             //{
-            var user = _db.GetUser(email);
+            var user = _db.GetUserByEmail(email);
 
                 if (user != null)
                 {

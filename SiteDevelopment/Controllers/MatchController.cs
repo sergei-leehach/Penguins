@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -11,10 +10,9 @@ using SiteDevelopment.Repository;
 
 namespace SiteDevelopment.Controllers
 {
-    [Authorize(Roles = "admin")]
-    public class MatchesController : Controller
+    public class MatchController : Controller
     {
-        TeamsRepository _db = new TeamsRepository();
+        TeamsRepository _db = new TeamsRepository(DbQuery.ConnectionString);
 
         // GET: Matches
         public ActionResult Index()
@@ -27,7 +25,7 @@ namespace SiteDevelopment.Controllers
         [HttpPost]
         public ActionResult Index(Match match)
         {
-            //match.Result = (TypeOfResult) Enum.Parse(typeof (TypeOfResult), result); [ModelBinder(typeof(MatchModelBinder))] 
+            //match.Result = (TypeOfResult) Enum.Parse(typeof (TypeOfResult), result); [ModelBinder(typeof(MatchModelBinder))]
             _db.NhlTableGeneration(match);
             return RedirectToAction("Index", "Standings");
         }

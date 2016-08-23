@@ -14,7 +14,7 @@ namespace SiteDevelopment.Providers
 
         public CustomRoleProvider()
         {
-            _db = new UserRepository();
+            _db = new UserRepository(DbQuery.ConnectionString);
         }
         public override string[] GetRolesForUser(string email)
         {
@@ -22,7 +22,7 @@ namespace SiteDevelopment.Providers
 
             //try
             //{
-            User user = _db.GetUser(email);
+            User user = _db.GetUserByEmail(email);
 
             if (user != null)
             {
@@ -52,7 +52,7 @@ namespace SiteDevelopment.Providers
             bool outputResult = false;
             //try
             //{
-            User user = _db.GetUser(email);
+            User user = _db.GetUserByEmail(email);
 
             if (user != null)
             {

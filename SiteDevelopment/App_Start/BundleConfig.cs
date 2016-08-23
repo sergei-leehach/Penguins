@@ -22,16 +22,19 @@ namespace SiteDevelopment
             bundles.Add(new ScriptBundle("~/bundles/moment").Include(
           "~/Scripts/moment-with-locales.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js", "~/Scripts/generator-functions.js", "~/Scripts/news-functions.js", "~/Scripts/user-functions.js", "~/Scripts/chosen.jquery.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
+                      "~/Scripts/respond.js", "~/Scripts/site-functions.js", "~/Scripts/generator-functions.js", "~/Scripts/news-functions.js", "~/Scripts/user-functions.js", "~/Scripts/chosen.jquery.min.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include("~/Scripts/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/datepicker").Include(
           "~/Scripts/bootstrap-datetimepicker.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css", "~/Content/bootstrap-datetimepicker.min.css",
-                      "~/Content/site.css", "~/Content/generator-styles.css", "~/Content/news-styles.css", "~/Content/chosen.min.css"));
+                      "~/Content/bootstrap-datetimepicker.min.css",
+                      "~/Content/site.css", "~/Content/generator-styles.css", "~/Content/news-styles.css", "~/Content/standings-styles.css", "~/Content/chosen.min.css"));
+
+            //bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.css", "~/Content/bootstrap-datetimepicker.min.css"));
             
         }
     }

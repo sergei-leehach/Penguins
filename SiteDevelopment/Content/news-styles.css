@@ -1,8 +1,4 @@
-﻿div {
-    border: 1px solid red;
-}
-
-.news-header {
+﻿.news-header {
     font-size: 28px;
 }
 
@@ -16,4 +12,8 @@
 
 .news-image {
     padding: 0;
+}
+
+.log-reg div {
+    padding: 5px;
 }

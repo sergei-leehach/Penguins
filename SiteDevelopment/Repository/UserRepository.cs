@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,67 +10,101 @@ using SiteDevelopment.Models;
 
 namespace SiteDevelopment.Repository
 {
-    public class UserRepository : IDisposable
+    public class UserRepository : BaseRepository
     {
-        private SiteContext _db;
-
-        public UserRepository()
+        public UserRepository(string connectionString) : base(connectionString)
         {
-            _db = new SiteContext();
         }
 
-        public User GetUser(int userId)
+        private string UserQuery(User user)
         {
-            return _db.Users.Find(userId);
+            var sqlQuery =
+                $"Insert into User (Nickname, Email, Password, DateOfRegistration, RoleId) Values ({user.Nickname}, {user.Email}, {user.Password}, {user.DateOfRegistration}, {user.RoleId})";
+            return sqlQuery;
         }
 
-        public User GetUser(string email)
+        public User GetUserById(int id)
         {
-            return _db.Users.SingleOrDefault(x => x.Email == email);
+            var user = new User();
+            var sqlQuery = $"Select * from Users where UserId = {id}";
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
+            command.Connection.Open();
+            var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                user = new User(reader);
+            }
+            command.Connection.Close();
+            return user;
         }
 
-        public Role GetRole(int? roleId) //Check this method as soon as possible!
+        public User GetUserByEmail(string email)
         {
-            return _db.Roles.Find(roleId);
+            var user = new User();
+            var sqlQuery = $"Select * from Users where Email = {email}";
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
+            command.Connection.Open();
+            var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                user = new User(reader);
+            }
+            command.Connection.Close();
+            return user;
+        }
+
+        public Role GetRole(int? id) //Check this method as soon as possible!
+        {
+            var role = new Role();
+            var sqlQuery = $"Select * from Role where RoleId = {id}";
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
+            command.Connection.Open();
+            var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                role.Id = Convert.ToInt32(reader["Id"]);
+                role.Name = reader["Name"].ToString();
+            }
+            command.Connection.Close();
+            return role;
         }
 
         public void CreateUser(string nickname, string email, string password)
         {
-            User user = new User();
-            user.Nickname = nickname;
-            user.Email = email;
-            user.Password = HashingPassword(password);
-            user.DateOfRegistration = DateTime.Now;
+            User user = new User
+            {
+                Nickname = nickname,
+                Email = email,
+                Password = HashingPassword(password),
+                DateOfRegistration = DateTime.Now
+            };
 
             if (GetRole(2) != null)
             {
                 user.RoleId = 2;
             }
 
-            _db.Users.Add(user);
-            _db.SaveChanges();
+            var sqlQuery = UserQuery(user);
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
+            DbQuery.ExecuteCommand(command);
         }
 
         public void CreateRole(Role role)
         {
-            _db.Roles.Add(role);
-            _db.SaveChanges();
+            var sqlQuery = $"Insert into Role (Id, Name) Values ({role.Id}, {role.Name}";
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
+            DbQuery.ExecuteCommand(command);
         }
 
         public void EditUser(User user)
         {
-            //var editable = GetUser(user.UserId);
-            //editable.Avatar = user.Avatar;
-            //editable.City = user.City;
-            //editable.DateOfBirth = user.DateOfBirth;
-            //editable.Email = user.Email;
-            //editable.FirstName = user.FirstName;
-            //editable.Nickname = user.Nickname;
-            //editable.Password = user.Password;
-            //editable.Surname = user.Surname;
-            _db.Users.Attach(user);
-            _db.Entry(user).State = EntityState.Modified;
-            _db.SaveChanges();
+            var sqlQuery =
+                $"Update User Set FirstName = {user.FirstName}, Surname = {user.Surname}, Nickname = {user.Nickname}, Email = {user.Email}, Password = {user.Password}, RememberMe = {user.RememberMe}, Avatar = {user.Avatar}, City = {user.City}, DateOfBirth = {user.DateOfBirth} Where UserId = {user.UserId}";
+            var command = DbQuery.CreateCommand(sqlQuery, ConnectionString);
+            DbQuery.ExecuteCommand(command);
         }
 
         public string HashingPassword(string unhashedPassword)
@@ -98,7 +132,7 @@ namespace SiteDevelopment.Repository
         public bool CheckPassword(int userId, string unhashedPassword)
         {
             string savedHashedPassword = string.Empty;
-            var user = GetUser(userId);
+            var user = GetUserById(userId);
             if (user != null)
             {
                 savedHashedPassword = user.Password; //get hashedPassword from where you saved it
@@ -107,11 +141,6 @@ namespace SiteDevelopment.Repository
             bool isMatch = savedHashedPassword.Equals(verification);
 
             return isMatch;
-        }
-
-        public void Dispose()
-        {
-            _db.Dispose();
         }
     }
 }

@@ -11,24 +11,25 @@ namespace SiteDevelopment.Controllers
 {
     public class NewsController : Controller
     {
-        NewsRepository _db = new NewsRepository();
+        NewsRepository _db = new NewsRepository(DbQuery.ConnectionString);
 
         [AllowAnonymous]
         public ActionResult Index(int? tagId)
         {
             if (tagId == null)
             {
-                var news = _db.GetAllNews();
+                var news = _db.GetNews();
                 return View(news);
             }
             else
             {
-                var news = _db.GetNewsByTagId(tagId);
+                var news = _db.GetNewsByTagId(tagId.Value);
                 return View(news);
             }
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
+        [ChildActionOnly]
         public ActionResult Create()
         {
             ViewBag.Tags = _db.GetTags();
@@ -39,8 +40,10 @@ namespace SiteDevelopment.Controllers
         [HttpPost]
         public ActionResult Create(News news)
         {
+            UserRepository repository = new UserRepository(DbQuery.ConnectionString);
+
             news.PublicationTime = DateTime.Now;
-            var author = _db.GetAuthor();
+            var author = repository.GetUserById(news.UserId); //check this method;
             author.RememberMe = false;
             news.Author = author;
             _db.CreateNews(news);
@@ -56,7 +59,7 @@ namespace SiteDevelopment.Controllers
         [AllowAnonymous]
         public ActionResult News(int id)
         {
-            var news = _db.GetNews(id);
+            var news = _db.GetNewsById(id);
             return View(news);
         }
 

@@ -55,7 +55,6 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -118,44 +117,24 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GeneratorController.cs" />
-    <Compile Include="Controllers\MatchesController.cs" />
+    <Compile Include="Controllers\MatchController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\StandingsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606011827492_NewNewInit.cs" />
-    <Compile Include="Migrations\201606011827492_NewNewInit.Designer.cs">
-      <DependentUpon>201606011827492_NewNewInit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606021009250_UserCorrection.cs" />
-    <Compile Include="Migrations\201606021009250_UserCorrection.Designer.cs">
-      <DependentUpon>201606021009250_UserCorrection.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606021324491_LengthAttribute.cs" />
-    <Compile Include="Migrations\201606021324491_LengthAttribute.Designer.cs">
-      <DependentUpon>201606021324491_LengthAttribute.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bundle.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\InputData.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\News.cs" />
-    <Compile Include="Models\SiteContext.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Season.cs" />
     <Compile Include="Models\Standings.cs" />
@@ -165,10 +144,13 @@
     <Compile Include="Models\TypeOfBoard.cs" />
     <Compile Include="Models\TypeOfResult.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Partial\SideClass.cs" />
     <Compile Include="Partial\Team.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CustomMembershipProvider.cs" />
     <Compile Include="Providers\CustomRoleProvider.cs" />
+    <Compile Include="Repository\BaseRepository.cs" />
+    <Compile Include="Repository\GeneratorRepository.cs" />
     <Compile Include="Repository\GraphicsExtention.cs" />
     <Compile Include="Repository\DbQuery.cs" />
     <Compile Include="Repository\ImageGeneration.cs" />
@@ -189,10 +171,11 @@
     <Content Include="Content\chosen.min.css" />
     <Content Include="Content\generator-styles.css" />
     <Content Include="Content\news-styles.css" />
+    <Content Include="Content\standings-styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
@@ -233,7 +216,8 @@
     <Content Include="Images\Logos\VAN.png" />
     <Content Include="Images\Logos\WPG.png" />
     <Content Include="Images\Logos\WSH.png" />
-    <Content Include="Images\Site Background\penguins-background.jpg" />
+    <Content Include="Images\Site\penguins-background.jpg" />
+    <Content Include="Images\Site\pit-logo.png" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -258,6 +242,7 @@
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\site-functions.js" />
     <Content Include="Scripts\user-functions.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
@@ -278,7 +263,7 @@
     <Content Include="Views\Generator\Index.cshtml" />
     <Content Include="Views\Standings\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Matches\Index.cshtml" />
+    <Content Include="Views\Match\Index.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\News\Comments.cshtml" />
     <Content Include="Views\News\AddIndex.cshtml" />
@@ -304,17 +289,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201606011827492_NewNewInit.resx">
-      <DependentUpon>201606011827492_NewNewInit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606021009250_UserCorrection.resx">
-      <DependentUpon>201606021009250_UserCorrection.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606021324491_LengthAttribute.resx">
-      <DependentUpon>201606021324491_LengthAttribute.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

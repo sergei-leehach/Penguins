@@ -6,99 +6,108 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container substrate">
-    <table class="table table-bordered">
-        <tr>
+@*@section standings{
+        <link rel="stylesheet"/>
+    }*@
+
+<div class="">
+    <table class="table-style">
+        <tr class="table-header">
+            @*<th>
+                <span>№</span>
+            </th>*@
             <th>
-                National Hockey League
+                <span>National Hockey League</span>
             </th>
             <th>
-                <span>GP</span>
+                <span><abbr title="Games Played">GP</abbr></span>
             </th>
             <th>
-                <span>W</span>
+                <span><abbr title="Wins">W</abbr></span>
             </th>
             <th>
-                <span>L</span>
+                <span><abbr title="Losses">L</abbr></span>
             </th>
             <th>
-                <span>OT</span>
+                <span><abbr title="OT/Shootout Losses">OT</abbr></span>
             </th>
             <th>
-                <span>PTS</span>
+                <span><abbr title="Points">PTS</abbr></span>
             </th>
             <th>
-                <span>ROW</span>
+                <span><abbr title="Regulation + OT Wins">ROW</abbr></span>
             </th>
             <th>
-                <span>GF</span>
+                <span><abbr title="Goals For">GF</abbr></span>
             </th>
             <th>
-                <span>GA</span>
+                <span><abbr title="Goals Against">GA</abbr></span>
             </th>
             <th>
-                <span>DIFF</span>
+                <span><abbr title="Goals Differential">DIFF</abbr></span>
             </th>
             <th>
-                <span>HOME</span>
+                <span><abbr title="Home Record">HOME</abbr></span>
             </th>
             <th>
-                <span>AWAY</span>
+                <span><abbr title="Away Record">AWAY</abbr></span>
             </th>
             <th>
-                <span>S/O</span>
+                <span><abbr title="Record in games decided by Shootout">S/O</abbr></span>
             </th>
             <th>
-                <span>L10</span>
+                <span><abbr title="Record in last ten games">L10</abbr></span>
             </th>
             <th>
-                <span>STRK</span>
+                <span><abbr title="Streak">STRK</abbr></span>
             </th>
         </tr>
         @{
-            foreach (var item in Model)
+            var rowNumber = 0;
+            foreach (var item in Model) /*Model.Select((value, index) => new { Value = value, Index = index }))*/
             {
+                rowNumber = rowNumber + 1;
                 <tr>
-                    <td>@item.Team.Name</td>
-                    <td>@item.GamesPlayed</td>
-                    <td>@item.Wins</td>
-                    <td>@item.Losses</td>
-                    <td>@item.OT</td>
-                    <td>@item.Points</td>
-                    <td>@item.ROW</td>
-                    <td>@item.GoalsFor</td>
-                    <td>@item.GoalsAgainst</td>
-                    <td>@item.GoalDifferential</td>
-                    <td>@item.HomeWins - @item.HomeLosses - @item.HomeOT</td>
-                    <td>@item.AwayWins - @item.AwayLosses - @item.AwayOT</td>
-                    <td>@item.ShootoutWins - @item.ShootoutLosses</td>
-                    <td>@item.LastWins - @item.LastLosses - @item.LastOT</td>
-
+                    @*<td><span>@rowNumber</span></td>*@
+                    <td><span>@item.Team.Name</span></td>
+                    <td><span>@item.GamesPlayed</span></td>
+                    <td><span>@item.Wins</span></td>
+                    <td><span>@item.Losses</span></td>
+                    <td><span>@item.OT</span></td>
+                    <td><span>@item.Points</span></td>
+                    <td><span>@item.ROW</span></td>
+                    <td><span>@item.GoalsFor</span></td>
+                    <td><span>@item.GoalsAgainst</span></td>
+                    <td><span>@item.GoalDifferential</span></td>
+                    <td><span>@item.HomeWins - @item.HomeLosses - @item.HomeOT</span></td>
+                    <td><span>@item.AwayWins - @item.AwayLosses - @item.AwayOT</span></td>
+                    <td><span>@item.ShootoutWins - @item.ShootoutLosses</span></td>
+                    <td><span>@item.LastWins - @item.LastLosses - @item.LastOT</span></td>                    
                     @{
-                        if (item.Team.AllGames.Count() == 0)
+                        if (item.GamesPlayed == 0)
                         {
+                            <td><span>-</span></td>
                             continue;
                         }
-                        Streak lastGame = item.Team.AllGames.Last();
-                        string s = string.Empty;
 
-                        switch (lastGame)
+                        string s = string.Empty;
+                        switch (item.TypeOfResult)
                         {
-                            case Streak.Win:
+                            case "Win":
                                 s = item.Streak == 1 ? "Win" : "Wins";
                                 break;
-                            case Streak.Loss:
+                            case "Loss":
                                 s = item.Streak == 1 ? "Loss" : "Losses";
                                 break;
-                            case Streak.OT:
+                            case "OT":
                                 s = "OT";
                                 break;
                         }
-                    }
 
-                    <td>@item.Streak @s</td>
+                        <td><span>@item.Streak @s</span></td>
+                    }
                 </tr>
-                        }
+            }
         }
     </table>
 </div>

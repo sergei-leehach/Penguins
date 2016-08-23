@@ -11,20 +11,22 @@ namespace SiteDevelopment.Controllers
 {
     [Authorize(Roles = "admin")]
     public class GeneratorController : Controller
-    {       
+    {
+        GeneratorRepository _db = new GeneratorRepository(DbQuery.ConnectionString);  
+             
         public ActionResult Index()
         {
-            ViewBag.DropDown = DbQuery.DropDownListGeneration();
+            ViewBag.DropDown = _db.DropDownListGeneration();
             ViewBag.Result = ServiceFunctions.GetResultField();
-            ViewBag.Images = DbQuery.GetAllBoards();
+            ViewBag.Images = _db.GetAllBoards();
             return View();
         }
 
         [HttpPost]
         public ActionResult Index(InputData data)
         {
-            data.AwayTeamShortName = DbQuery.GetShortName(data.AwayTeam);
-            data.HomeTeamShortName = DbQuery.GetShortName(data.HomeTeam);
+            data.AwayTeamShortName = _db.GetShortName(data.AwayTeam);
+            data.HomeTeamShortName = _db.GetShortName(data.HomeTeam);
             data.HomeTeamLogo = SetTeamLogo(data.HomeTeamShortName);
             data.AwayTeamLogo = SetTeamLogo(data.AwayTeamShortName);
             data.BackgroundImage = Server.MapPath(data.BackgroundImage);
@@ -43,7 +45,7 @@ namespace SiteDevelopment.Controllers
         [HttpPost]
         public ActionResult GetPlace(string name)
         {
-            string[] array = DbQuery.GetPlace(name);
+            string[] array = _db.GetPlace(name);
 
             return Json(new { city = array[0], arena = array[1] }, JsonRequestBehavior.AllowGet);
         }

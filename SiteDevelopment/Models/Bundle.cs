@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -16,5 +19,16 @@ namespace SiteDevelopment.Models
 
         public News News { get; set; }
         public Tag Tag { get; set; }
+
+        public Bundle()
+        {         
+        }
+
+        public Bundle(DbDataReader reader)
+        {
+            Id = Convert.ToInt32(reader["Id"]);
+            NewsId = Convert.ToInt32(reader["NewsId"]);
+            TagId = Convert.ToInt32(reader["TagId"]);
+        }
     }
 }

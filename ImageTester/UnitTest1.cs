@@ -12,6 +12,7 @@ namespace ImageTester
     [TestClass]
     public class UnitTest1
     {
+        GeneratorRepository repository = new GeneratorRepository(DbQuery.ConnectionString);
         //[TestMethod]
         //public void TestMethod1()
         //{
@@ -36,6 +37,7 @@ namespace ImageTester
         public void TestMethod2()
         {
             InputData data = new InputData();
+            
             data.Arena = "Console Energy Center";
             data.AwayTeam = "Detroit Red Wings";
             data.BackgroundImage = @"C:\users\hatassska\Desktop\nhl.jpg";
@@ -45,8 +47,8 @@ namespace ImageTester
             data.AwayTeamScore = 8;
             data.HomeTeamScore = 5;
 
-            data.AwayTeamShortName = DbQuery.GetShortName(data.AwayTeam);
-            data.HomeTeamShortName = DbQuery.GetShortName(data.HomeTeam);         
+            data.AwayTeamShortName = repository.GetShortName(data.AwayTeam);
+            data.HomeTeamShortName = repository.GetShortName(data.HomeTeam);         
             data.HomeTeamLogo = new GeneratorController().SetTeamLogo(data.HomeTeamShortName);
             data.AwayTeamLogo = new GeneratorController().SetTeamLogo(data.AwayTeamShortName);
 
@@ -65,14 +67,14 @@ namespace ImageTester
         public void TestMethod3()
         {
             
-            var res = DbQuery.DropDownListGeneration();
+            var res = repository.DropDownListGeneration();
             Assert.AreEqual(res.GetType(), typeof(List<string>));
         }
 
         [TestMethod]
         public void TestMethod4()
         {
-            var result = DbQuery.GetPlace("Pittsburgh Penguins");
+            var result = repository.GetPlace("Pittsburgh Penguins");
 
             Assert.AreEqual("Pittsburgh, PA", result[0]);
         }

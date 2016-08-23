@@ -1,58 +1,121 @@
-﻿<!DOCTYPE html>
+﻿@using System.Diagnostics.Eventing.Reader
+@*<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - My ASP.NET Application</title>
+        @Styles.Render("~/Content/css")
+        <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed&subset=latin,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
+        @Scripts.Render("~/bundles/modernizr")
+
+    </head>
+    <body class="background">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Pittsburgh Penguins", "Index", "Standings", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Standings", "Index", "Standings")</li>
+                        <li>@Html.ActionLink("Matches", "Index", "Matches")</li>
+                        <li>@Html.ActionLink("News", "Create", "News")</li>
+                        <li>@Html.ActionLink("Logon", "LogOn", "User")</li>
+                        <li>@Html.ActionLink("Register", "Registration", "User")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            <div class="row">
+                <div class="col-lg-9">
+                    @RenderBody()
+                </div>
+                <div class="col-lg-3">
+
+                </div>
+            </div>
+
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/moment")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/datepicker")
+
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>*@
+
+<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Pittsburgh Penguins</title>
     @Styles.Render("~/Content/css")
     <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed&subset=latin,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
-<body class="background">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Pittsburgh Penguins", "Index", "Standings", new { area = "" }, new { @class = "navbar-brand" })
+
+<body class="main">
+    <div class="navigation">
+        <div class="wrapper">
+            <div class="left-side">
+                <a href="">
+                    <div class="main-page-link"></div>@*<img src="~/Images/Site/pit-logo.png" alt="Oops!" class="main-page-link" />*@
+                </a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+            <div class="right-side">
+                <ul class="nav-align">
+                    <li>@Html.ActionLink("News", "Index", "News")</li>
+                    <li>@Html.ActionLink("Matches", "Index", "Match")</li>
                     <li>@Html.ActionLink("Standings", "Index", "Standings")</li>
-                    <li>@Html.ActionLink("Matches", "Index", "Matches")</li>
-                    <li>@Html.ActionLink("News", "Create", "News")</li>
-                    <li>@Html.ActionLink("Logon", "LogOn", "User")</li>
-                    <li>@Html.ActionLink("Register", "Registration", "User")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li style="float: right">@Html.ActionLink("Log off", "LogOff", "User")</li>
+                        <li style="float: right">@Html.ActionLink(User.Identity.Name, "Index", "User")</li>
+                    }
+                    else
+                    {
+                        <li style="float: right">@Html.ActionLink("Register", "Registration", "User")</li>
+                        <li style="float: right">@Html.ActionLink("Log on", "LogOn", "User")</li>
+                    }
                 </ul>
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        <div class="row">
-            <div class="col-lg-9">
-                @RenderBody()
-            </div>
-            <div class="col-lg-3">
 
-            </div>
-        </div>
+    <div class="body-style">
+        @*<div class="content">*@
+        @*<img src="https://pp.vk.me/c631530/v631530771/33f1a/Xq9FYD-fBQM.jpg" class="header-img-style" />*@
+        @RenderBody()
+        @*</div>*@
+        @*<div class="column">
 
-        <hr />
+            </div>*@
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Sergei Achintsev</p>
         </footer>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/moment")
+        @Scripts.Render("~/bundles/datepicker")
+        @Scripts.Render("~/bundles/scripts")
+
+        @RenderSection("scripts", required: false)
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/moment")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/datepicker")
-
-    @RenderSection("scripts", required: false)
 </body>
 </html>

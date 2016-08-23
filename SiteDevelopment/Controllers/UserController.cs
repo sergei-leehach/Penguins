@@ -17,7 +17,7 @@ namespace SiteDevelopment.Controllers
 
         public UserController()
         {
-            _db = new UserRepository();
+            _db = new UserRepository(DbQuery.ConnectionString);
             _provider = new CustomMembershipProvider();
         }
 
@@ -25,7 +25,7 @@ namespace SiteDevelopment.Controllers
         [Authorize]
         public ActionResult Index(int id)
         {
-            var user = _db.GetUser(id);
+            var user = _db.GetUserById(id);
             return View(user);
         }
 
@@ -34,7 +34,7 @@ namespace SiteDevelopment.Controllers
         {
             if (id.HasValue)
             {
-                var user = _db.GetUser(id.Value);
+                var user = _db.GetUserById(id.Value);
                 return View(user);
             }
             return RedirectToAction("Index", "News");
@@ -106,7 +106,7 @@ namespace SiteDevelopment.Controllers
 
                 if (membershipUser != null)
                 {
-                    User u = _db.GetUser(user.Email);
+                    User u = _db.GetUserByEmail(user.Email);
 
                     FormsAuthentication.SetAuthCookie(u.Email, false);
                     return RedirectToAction("Edit", new { id = u.UserId });

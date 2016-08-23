@@ -5,11 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Log On</h1>
+<h1>Log on</h1>
 
 @using (Html.BeginForm("LogOn", "User", FormMethod.Post))
 {
-    <div>
+    <div class="log-reg">
         <fieldset>
             <legend>Account information</legend>
 
@@ -27,14 +27,18 @@
                 @Html.ValidationMessageFor(x => x.Password)
             </div>
             <div>
-                @Html.LabelFor(x => x.RememberMe)
-                @Html.CheckBoxFor(x => x.RememberMe)
-                @*<input type="checkbox" name="RememberMe"/>*@
+                @Html.CheckBoxFor(x => x.RememberMe, new { @checked = "checked" })
+                @Html.LabelFor(x => x.RememberMe, new { style = "margin-left: 5px" })
+
+                @*<label>Remember Me?<input type="checkbox" name="Remember Me?" value="value"></label>*@
+                @*<input type="checkbox" name="checkbox" id="checkbox_id" value="value">
+                    <label for="checkbox_id">Text</label>*@
+            </div>
+            <div>
+                <input type="submit" value="Log On" />
             </div>
         </fieldset>
     </div>
-    <div>
-        <input type="submit" value="Log On" />
-    </div>
 }
+
 
