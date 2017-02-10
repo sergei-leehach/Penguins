@@ -22,7 +22,7 @@ namespace SiteDevelopment.Controllers
         }
 
         // GET: User
-        [Authorize]
+        //[Authorize]
         public ActionResult Index(int id)
         {
             var user = _db.GetUserById(id);

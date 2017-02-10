@@ -4,14 +4,44 @@
     ViewBag.Title = "Index";
 }
 
-<form action="/Match" method="POST" class="form-horizontal">
-    <div class="container substrate">
+<form action="/Match" method="POST" class="navbar-form">
+    <div class="any-div">
+        @*<div class="form-group">
+                <label class="col-lg-5">Date of a match</label>
+                <div class="col-lg-7">
+                    <div class="input-group date" id="datetimepicker2">
+                        <input type="text" class="form-control" name="DateOfAMatch" id="date-input" onkeydown="return false"/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>*@
 
-        <div class="form-group">
-            <label class="col-lg-5">Гостевая команда</label>
-            <div class="col-lg-7">
-                <select class="team-dropdown form-control" name="AwayTeamId">
-                    <option class="team-dropdown" disabled selected>Выберите команду...</option>
+        <div class="teams-layout">
+            <div>
+                <label>Away Team</label>
+            </div>
+            <div>
+                <select class="team-dropdown" name="AwayTeamId">
+                    <option class="team-dropdown" disabled selected>Select team...</option>
+                    @{
+                        foreach (var item in ViewBag.DropDown)
+                        {
+                            <option class="team-dropdown-clean" value="@item.TeamId">@item.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+
+
+            <div>
+                <label>Home Team</label>
+            </div>
+            <div>
+                <select class="team-dropdown" name="HomeTeamId">
+                    <option class="team-dropdown" disabled selected>Select team...</option>
                     @{
                         foreach (var item in ViewBag.DropDown)
                         {
@@ -21,43 +51,33 @@
                 </select>
             </div>
         </div>
-
-        <div class="form-group">
-            <label class="col-lg-5">Домашняя команда</label>
-            <div class="col-lg-7">
-                <select class="team-dropdown form-control" name="HomeTeamId">
-                    <option class="team-dropdown" disabled selected>Выберите команду...</option>
-                    @{
-                        foreach (var item in ViewBag.DropDown)
-                        {
-                            <option class="team-dropdown-clean" value="@item.TeamId">@item.Name</option>
+        <div class="score-layout">
+            <div>
+                <div>
+                    <label>Game Score</label>
+                </div>
+                <div>
+                    <input id="AwayTeamScore" type="number" value="0" min="0" max="100" step="1" name="AwayTeamScore" onchange="Lock();"/>
+                </div>
+                <div>
+                    <input id="HomeTeamScore" type="number" value="0" min="0" max="100" step="1" name="HomeTeamScore" onchange="Lock();"/>
+                </div>
+                <div>
+                    <select class="team-dropdown" name="result">
+                        <option class="team-dropdown" id="result" value="summary" disabled selected>Result</option>
+                        @{
+                            foreach (string item in ViewBag.Result)
+                            {
+                                <option class="team-dropdown-clean" value="@item">@item.ToString()</option>
+                            }
                         }
-                    }
-                </select>
+                    </select>
+                </div>
             </div>
         </div>
-        <div id="scoreboard" class="form-group">
-            <label class="col-lg-5">Счёт матча</label>
-            <div class="col-lg-2">
-                <input class="form-control" type="number" value="0" min="0" max="100" step="1" name="AwayTeamScore" />
-            </div>
-            <div class="col-lg-2">
-                <input class="form-control" type="number" value="0" min="0" max="100" step="1" name="HomeTeamScore" />
-            </div>
-            <div class="col-lg-3">
-                <select class="team-dropdown form-control" name="result">
-                    <option class="team-dropdown" id="result" disabled selected>Итог</option>
-                    @{
-                        foreach (string item in ViewBag.Result)
-                        {
-                            <option class="team-dropdown-clean" value="@item">@item.ToString()</option>
-                        }
-                    }
-                </select>
-            </div>
-        </div>
-
-        <button type="submit" class="btn btn-default">Создать матч</button>
-        <button type="reset" class="btn btn-default">Сбросить данные</button>
     </div>
 </form>
+<div style="padding: 5px 10px">
+    <input type="submit" class="btn btn-default" value="Create" />
+    <input type="reset" class="btn btn-default" value="Reset" />
+</div>

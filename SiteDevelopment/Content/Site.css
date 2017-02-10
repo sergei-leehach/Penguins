@@ -37,6 +37,7 @@ h1, h2, h3, h4, h5, h6 {
 
 a, a:link, a:visited, a:active, a:hover {
     text-decoration: none;
+    color: black;
 }
 
 img {
@@ -52,7 +53,7 @@ table {
 form {
     margin: 0;
     padding: 0;
-    display: inline;
+    display: inline-block;
 }
 
 /* --=====-- Own classes --=====-- */
@@ -129,6 +130,9 @@ form {
     background-size: 55px 50px;
 }
 
+.any-div div {
+    padding: 5px;
+}
 
 li {
     display: inline-block;
@@ -165,7 +169,7 @@ li {
     border-bottom: 5px black solid;
 }
 
-input {
+input, select {
     height: 30px;
     padding-left: 7px;
     font-size: larger;
@@ -182,7 +186,7 @@ input {
         -webkit-box-shadow: 0 0 0px 1000px white inset;
     }
 
-    input:focus {
+    input:focus, select:focus {
         outline-color: #fdbb30;
     }
 
@@ -207,6 +211,29 @@ input {
     input[type="submit"]:active {
         background-color: black;
         color: #fdbb30;
+    }
+
+    input[type="reset"] {
+        border: none;
+        outline: none;
+        background-color: black;
+        color: white;
+        width: 100px;
+        height: 45px;
+        font-family: "Roboto Condensed";
+        font-size: 20px;
+        font-weight: bold;
+        float: inherit;
+    }
+
+    input[type="reset"]:hover {
+        background-color: black;
+        color: #fdbb30;
+    }
+
+    input[type="reset"]:active {
+        background-color: #fdbb30;
+        color: black;
     }
 
     input[type="checkbox"] {

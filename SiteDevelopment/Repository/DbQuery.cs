@@ -6,12 +6,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls.Expressions;
+using System.Configuration;
 
 namespace SiteDevelopment.Repository
 {
     public static class DbQuery
     {
-        public const string ConnectionString = @"Server=localhost\SQLEXPRESS; Database=SiteDevelopment; Trusted_Connection=True;";
+        public static string ConnectionString = ConfigurationManager.ConnectionStrings["SiteConnectionString"].ConnectionString;
 
         public static SqlCommand CreateCommand(string yourQuery, string connectionString)
         {

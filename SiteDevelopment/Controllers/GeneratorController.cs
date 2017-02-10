@@ -9,7 +9,7 @@ using SiteDevelopment.Repository;
 
 namespace SiteDevelopment.Controllers
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     public class GeneratorController : Controller
     {
         GeneratorRepository _db = new GeneratorRepository(DbQuery.ConnectionString);  

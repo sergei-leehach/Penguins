@@ -12,7 +12,7 @@ using System.Web.UI;
 namespace SiteDevelopment.Models
 {
     public class News
-    {       
+    {
         [Key]
         public int NewsId { get; set; }
         public string Image { get; set; }
@@ -29,7 +29,7 @@ namespace SiteDevelopment.Models
 
         public ICollection<Bundle> Bundle { get; set; }
         public ICollection<Comment> Comments { get; set; }
-       
+
         public News()
         {
             Bundle = new HashSet<Bundle>();

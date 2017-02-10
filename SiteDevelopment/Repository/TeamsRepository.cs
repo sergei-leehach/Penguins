@@ -29,8 +29,9 @@ namespace SiteDevelopment.Repository
                 var team = new Team(reader);
                 teams.Add(team);
             }
+            var sortedTeams = teams.OrderBy(x => x.Name).ToList();
             command.Connection.Close();
-            return teams;
+            return sortedTeams;
         }
 
         public Team GetTeamById(int id)

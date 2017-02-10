@@ -23,7 +23,7 @@ namespace SiteDevelopment
           "~/Scripts/moment-with-locales.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
-                      "~/Scripts/respond.js", "~/Scripts/site-functions.js", "~/Scripts/generator-functions.js", "~/Scripts/news-functions.js", "~/Scripts/user-functions.js", "~/Scripts/chosen.jquery.min.js"));
+                      "~/Scripts/respond.js", "~/Scripts/site-functions.js", "~/Scripts/generator-functions.js", "~/Scripts/news-functions.js", "~/Scripts/user-functions.js", "~/Scripts/teams-functions.js", "~/Scripts/chosen.jquery.min.js"));
 
             //bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include("~/Scripts/bootstrap.js"));
 
@@ -32,7 +32,7 @@ namespace SiteDevelopment
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-datetimepicker.min.css",
-                      "~/Content/site.css", "~/Content/generator-styles.css", "~/Content/news-styles.css", "~/Content/standings-styles.css", "~/Content/chosen.min.css"));
+                      "~/Content/site.css", "~/Content/generator-styles.css", "~/Content/news-styles.css", "~/Content/standings-styles.css", "~/Content/matches-styles.css", "~/Content/chosen.min.css"));
 
             //bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.css", "~/Content/bootstrap-datetimepicker.min.css"));
             
