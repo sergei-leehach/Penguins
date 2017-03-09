@@ -29,7 +29,7 @@ namespace SiteDevelopment.Controllers
         }
 
         //[Authorize(Roles = "admin")]
-        [ChildActionOnly]
+        //[ChildActionOnly]
         public ActionResult Create()
         {
             ViewBag.Tags = _db.GetTags();

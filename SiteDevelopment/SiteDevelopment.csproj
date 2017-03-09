@@ -188,6 +188,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Images\Chosen Plugin\chosen-sprite%402x.png" />
     <Content Include="Images\Chosen Plugin\chosen-sprite.png" />
+    <None Include="Properties\PublishProfiles\Folder.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Images\Board Background\arena-board.jpg" />
     <Content Include="Images\Board Background\ice-board.jpg" />
